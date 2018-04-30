@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<!-- Mirrored from kiswa.net/themes/star-restaurant/orange-restaurant/menu-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Apr 2018 08:30:48 GMT -->
+
 <head>
     <title>Services</title>
     <meta charset="utf-8">
@@ -39,7 +39,7 @@
     <!--========= PAGE-COVER =========-->
     <div class="page-cover">
         <div class="container-fluid">
-            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span>Delivery Place<span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
+            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span>Place of Delivery<span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
         </div><!-- end container-fluid -->
     </div><!-- end page-cover -->
     <!--=================== PAGE-WRAPPER ================-->
@@ -47,7 +47,13 @@
 
         <div id="register-page" >
             <div class="container-fluid text-center" style="padding: 0px">
+                <div class="form-group col-lg-12">
+                    <input type="text" class="form-control" id="address">
+                </div>
+                <div class="clearfix"></div>
                 <div id="map" style="height: 88.6vh;"></div>
+                <input type="hidden" id="latitude">
+                <input type="hidden" id="longitude">
                 <div class="clerfix"></div>
                 <button id="savePlaceOfDelivery" style="  position: fixed; bottom: 0;left: 0; width: 100%;border-radius: 0;" class="btn btn-orange btn-radius"><i class="far fa-compass"></i> Save Place</button>
             </div><!-- end container-fluid -->
@@ -69,5 +75,5 @@
 <script src="js/parcel_place_of_delivery.js"></script>
 <!-- Page Scripts Ends -->
 </body>
-<!-- Mirrored from kiswa.net/themes/star-restaurant/orange-restaurant/menu-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Apr 2018 08:31:03 GMT -->
+
 </html>

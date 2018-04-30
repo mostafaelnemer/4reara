@@ -15,6 +15,45 @@
     <!-- Custom Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/orange.css">
+    <style>
+        .visible-xs {
+            display: inline-block !important;
+        }
+        .block {
+            display: block !important;
+            width: 100%;
+            height: 1px !important;
+        }
+        ul.c-controls li {
+            margin-top: 8px;
+            float: left;
+        }
+        ul.c-controls li a {
+            font-size: 1.7em;
+            padding: 11px 10px 6px;
+        }
+        ul.c-controls li a i {
+            min-width: 24px;
+            text-align: center;
+        }
+        ul.c-controls li a:hover {
+            background-color: rgba(51, 51, 51, 0.2);
+        }
+        .c-toggle {
+            font-size: 1.7em;
+        }
+        .name {
+            font-size: 1.7em;
+            font-weight: 700;
+        }
+        .c-info {
+            padding: 5px 10px;
+            font-size: 1.25em;
+        }
+        .img-responsive{
+            max-width: 50% !important;
+        }
+    </style>
 </head>
 <body class="page-body">
 <!--====== LOADER =====-->
@@ -39,26 +78,19 @@
     <!--========= PAGE-COVER =========-->
     <div class="page-cover">
         <div class="container-fluid">
-            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span>Delivery Place<span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
+            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span>My Orders<span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
         </div><!-- end container-fluid -->
     </div><!-- end page-cover -->
     <!--=================== PAGE-WRAPPER ================-->
     <section class="page-wrapper innerpage-section-padding">
 
-        <div id="register-page" >
-            <div class="container-fluid text-center" style="padding: 0px">
-                <div class="form-group col-lg-12">
-                    <input type="text" class="form-control" id="address">
-                </div>
-                <div class="clearfix"></div>
-                <div id="map" style="height: 88.6vh;"></div>
-                <div class="clerfix"></div>
-                <input type="hidden" id="latitude">
-                <input type="hidden" id="longitude">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+            <div class="panel panel-default">
+                <ul class="list-group" id="services-list">
 
-                <button id="saveDeliveryPlace" style="position: fixed; bottom: 0;left: 0; width: 100%;border-radius: 0;" class="btn btn-orange btn-radius"><i class="far fa-compass"></i> Save Place</button>
-            </div><!-- end container-fluid -->
-        </div><!-- end register-page -->
+                </ul>
+            </div>
+        </div>
     </section><!-- end page-wrapper -->
     <!--=============== FOOTER ===============-->
     <!--<section w3-include-html="include/footer.html" id="footer" class="section-padding"></section>-->
@@ -73,7 +105,7 @@
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/index.js"></script>
 <script src="https://apis.google.com/js/api.js"></script>
-<script src="js/parcel_delivery_place.js"></script>
+<script src="js/my_orders.js"></script>
 <!-- Page Scripts Ends -->
 </body>
 

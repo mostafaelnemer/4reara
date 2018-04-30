@@ -36,20 +36,20 @@
 		e.stopPropagation();
 		fullScrNav.toggleClass('to-top-toggle')
 	});
-
-	//Sidebar Navigation
-	$(document).on('click',"#sidenav-open",function(e){
-        e.stopPropagation();
-        //sideBarNav.toggleClass('to-left-toggle')
-        $(".sidenav").toggleClass('to-left-toggle')
-        over.css('visibility', 'visible')
+	
+	
+	//Sidebar Navigation	
+	sideBarOpen.on('click', function(e) {
+		e.stopPropagation();
+		sideBarNav.toggleClass('to-left-toggle')
+		over.css('visibility', 'visible')
 	});
-
-	$(document).on('click',"#sidenav-close",function(e){
-        e.stopPropagation();
-        $(".sidenav").toggleClass('to-left-toggle')
-        $(".overlay-black").css('visibility', 'hidden')
-	})
+	
+	sideBarClose.on('click', function(e) {
+		e.stopPropagation();
+		sideBarNav.toggleClass('to-left-toggle')
+		over.css('visibility', 'hidden')
+	});
 	
 	
 	//Shopping Cart Sidebar	
@@ -70,8 +70,8 @@
 	
 	pageBody.on('click', function(e) {
 		
-	  if ($(".sidenav").hasClass('to-left-toggle')) {
-          $(".sidenav").toggleClass('to-left-toggle')
+	  if (sideBarNav.hasClass('to-left-toggle')) {
+		sideBarNav.toggleClass('to-left-toggle')
 		over.css('visibility', 'hidden')
 	  }
 	  

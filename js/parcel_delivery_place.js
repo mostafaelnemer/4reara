@@ -1,1 +1,0 @@
-$(document).on('click','#saveDeliveryPlace',function(){})
