@@ -61,11 +61,16 @@
 	
 	
 	//User Sidebar
-	usrSideOpen.on('click', function(e) {
+	$(document).on('click',"#usr-side-open",function(e){
+        e.stopPropagation();
+        $("#user-profile-sidebar").toggleClass('to-right-toggle')
+        $(".overlay-black").css('visibility', 'visible')
+	});
+	/*usrSideOpen.on('click', function(e) {
 		e.stopPropagation();
 		usrSideBar.toggleClass('to-right-toggle')
 		over.css('visibility', 'visible')
-	});
+	});*/
 	
 	
 	pageBody.on('click', function(e) {

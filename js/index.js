@@ -74,7 +74,7 @@ function getMessages(response,element){
     html='<div class="alert '+((response.success)?'alert-success':'alert-danger')+'">';
     message=response.message;
     if(message.length==1){
-        html+=((typeof errorMessages[0]=='undefined')?message[0]:errorMessages[message[0]])+'</div>';
+        html+=((typeof errorMessages[message[0]]=='undefined')?message[0]:errorMessages[message[0]])+'</div>';
         $(element).html(html);
         return'';
     }
