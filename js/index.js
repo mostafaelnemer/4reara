@@ -6,7 +6,12 @@ window.sessionStorage.removeItem("key"); //Remove Item
 window.sessionStorage.clear();//Clear storage
 */
 //  window.sessionStorage.clear();
-var userData = window.sessionStorage.getItem("userData")
+var userData = window.sessionStorage.getItem("userData");
+if(userData){
+
+    userData=JSON.parse(userData);
+}
+
 //console.log(userData);
 url = window.location.pathname;
 var filename = url.substring(url.lastIndexOf('/')+1);
@@ -61,7 +66,53 @@ function includeHTML() {
     }
 };
 includeHTML();
+function formatDate(date) {
+    var monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
+function formatTime(date) {
+    var hr = date.getHours();
+    var min = date.getMinutes();
+    if (min < 10) {
+        min = "0" + min;
+    }
+    var ampm = "am";
+    if( hr > 12 ) {
+        hr -= 12;
+        ampm = "pm";
+    }if(hr==12&&min>0){
+        ampm="pm"
+    }
+    return hr + ":" + min + ampm
+}
+function statusIcon(statues) {
+    switch (statues){
+        case 'new':
+            return 'fa-times-circle'
+            break;
+        case 'inprogress':
+            return 'fa-spinner';
+            break;
+        case 'canceled':
+            return 'fa-times-circle'
+            break;
+        case 'closed':
+            return 'fa-check'
+            break;
+    }
+}
 //the url of api requests
+var SITEURL="http://4reara.almoasherbiz.com/";
 var APIURL="http://4reara.almoasherbiz.com/ForeraaAPI/";
 //var APIURL="http://localhost/foreraa/public/ForeraaAPI/";
 
@@ -102,12 +153,24 @@ function updateStatusCallback(response) {
     }
 }
 function onDeviceReady() {
+    if(userData){
+        $("#logoutMenu").removeClass('hidden');
+        if(filename=='map.html'){
+            if(userData.type=='customer'){
+                $("#getAllServices").removeClass('hidden');
+            }else{
+                $("#getAllOrders").removeClass('hidden');
+                $("#serviceMenu").addClass('hidden');
+            }
+        }
+
+    }
     //console.log('Device Is Ready');
 
    // console.log("start get location ");
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-    cordova.plugins.locationAccuracy.canRequest(function(canRequest){
+    /*cordova.plugins.locationAccuracy.canRequest(function(canRequest){
         if(canRequest){
             cordova.plugins.locationAccuracy.request(function (success){
                 //console.log("Successfully requested accuracy: "+success.message);
@@ -121,7 +184,7 @@ function onDeviceReady() {
                 }
             }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
         }
-    });
+    });*/
 
     $(document).on('click',"#fb_login",facebookLogin);
     var registerValidator = $("#register-form").validate({
@@ -289,6 +352,10 @@ $(document).on('click','#getMyLocation',function(){
     //console.log("start get location");
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 });
+$(document).on('click','#getAllOrders',function(e){
+    e.preventDefault();
+    window.location.href="delegate-orders.html";
+})
 $(document).on('click','#getAllServices',function(){
     $(".loader").show();
     longitude=$("#longitude").val();
@@ -337,57 +404,32 @@ $(document).on('click','#delivery_place',function(){
 
 /*single parcel end code*/
  function onSuccess(position){
-    //console.log("succsess get location");
-    var longitude = position.coords.longitude;
-    var latitude = position.coords.latitude;
-    var latLong = new google.maps.LatLng(latitude, longitude);
-    var mapOptions = {
-        center: latLong,
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+     if($("#map").length>0){
+         //console.log("succsess get location");
+         var longitude = position.coords.longitude;
+         var latitude = position.coords.latitude;
+         var latLong = new google.maps.LatLng(latitude, longitude);
+         var mapOptions = {
+             center: latLong,
+             zoom: 15,
+             mapTypeId: google.maps.MapTypeId.ROADMAP,
+             gestureHandling: 'greedy'
+         };
 
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-    var marker = new google.maps.Marker({
-        position: latLong,
-        map: map,
-        title: 'my location',
-        draggable: true,
-    });
-     var geocoder = new google.maps.Geocoder();
-     var latlng = {lat: latitude, lng: longitude};
-     geocoder.geocode({'location': latlng}, function(results, status) {
-         if (status === google.maps.GeocoderStatus.OK) {
-             address=results[0].formatted_address;
-             $("#address").val(address);
-             $("#latitude,#latitude_d").val(latitude);
-             $("#longitude,#longitude_d").val(longitude);
-             if(filename=='map.html'){
-                 window.sessionStorage.setItem("userDataLongitude", longitude)
-                 window.sessionStorage.setItem("userDataLatitude", latitude)
-                 window.sessionStorage.setItem("userDataAddress", address)
-             }
-         } else {
-             alert('Geocode was not successful for the following reason: ' + status);
-         }
-     });
-     marker.addListener('drag',function(event) {
-         //console.log(event.latLng.lat());
-         //console.log(event.latLng.lng());
-     });
-     map.addListener('click',function(event){
-         //console.log(event.latLng.lat());
-         //console.log(event.latLng.lng());
-         var latlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
-         marker.setPosition(latlng);
-         latitude=event.latLng.lat();
-         longitude=event.latLng.lng();
-
+         var marker = new google.maps.Marker({
+             position: latLong,
+             map: map,
+             title: 'my location',
+             draggable: true,
+         });
+         var geocoder = new google.maps.Geocoder();
+         var latlng = {lat: latitude, lng: longitude};
          geocoder.geocode({'location': latlng}, function(results, status) {
              if (status === google.maps.GeocoderStatus.OK) {
                  address=results[0].formatted_address;
-                 $("#address,#ar_address").val(address);
+                 $("#address").val(address);
                  $("#latitude,#latitude_d").val(latitude);
                  $("#longitude,#longitude_d").val(longitude);
                  if(filename=='map.html'){
@@ -399,54 +441,83 @@ $(document).on('click','#delivery_place',function(){
                  alert('Geocode was not successful for the following reason: ' + status);
              }
          });
-     });
-     marker.addListener('dragend',function(event) {
-         var latitude = event.latLng.lat();
-         var longitude = event.latLng.lng();
-         var latlng = {lat: latitude, lng: longitude};
-         geocoder.geocode({'location': latlng}, function(results, status) {
-             if (status === google.maps.GeocoderStatus.OK) {
-                 address=results[0].formatted_address;
-                 $("#address").val(address);
-                 $("#latitude").val(latitude);
-                 $("#longitude").val(longitude);
-                 if(filename=='map.html'){
-                     window.sessionStorage.setItem("userDataLongitude", longitude)
-                     window.sessionStorage.setItem("userDataLatitude", latitude)
-                     window.sessionStorage.setItem("userDataAddress", address)
-                 }
-             } else {
-                 alert('Geocode was not successful for the following reason: ' + status);
-             }
+         marker.addListener('drag',function(event) {
+             //console.log(event.latLng.lat());
+             //console.log(event.latLng.lng());
          });
-     });
-     marker.addListener('dragstart',function(event) {
-         //console.log(event);
-         //console.log("stat"+event.latLng.lat());
-         //console.log("stat"+event.latLng.lng());
-     });
-     if(document.getElementById('address')&&$("#address").attr('type')!='hidden'){
-         var autocomplete = new google.maps.places.Autocomplete(document.getElementById('address'));
-         autocomplete.bindTo('bounds', map);
-         autocomplete.addListener('place_changed', function() {
-             var place = autocomplete.getPlace();
-             if(place.geometry){
-                 if (place.geometry.viewport) {
-                     map.fitBounds(place.geometry.viewport);
-                     latitude=place.geometry.location.lat();
-                     longitude=place.geometry.location.lng();
-                     $("#latitude").val(latitude);
-                     $("#longitude").val(longitude);
+         map.addListener('click',function(event){
+             //console.log(event.latLng.lat());
+             //console.log(event.latLng.lng());
+             var latlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+             marker.setPosition(latlng);
+             latitude=event.latLng.lat();
+             longitude=event.latLng.lng();
+
+             geocoder.geocode({'location': latlng}, function(results, status) {
+                 if (status === google.maps.GeocoderStatus.OK) {
+                     address=results[0].formatted_address;
+                     $("#address,#ar_address").val(address);
+                     $("#latitude,#latitude_d").val(latitude);
+                     $("#longitude,#longitude_d").val(longitude);
+                     if(filename=='map.html'){
+                         window.sessionStorage.setItem("userDataLongitude", longitude)
+                         window.sessionStorage.setItem("userDataLatitude", latitude)
+                         window.sessionStorage.setItem("userDataAddress", address)
+                     }
                  } else {
-                     latitude=place.geometry.location.lat();
-                     longitude=place.geometry.location.lng();
+                     alert('Geocode was not successful for the following reason: ' + status);
+                 }
+             });
+         });
+         marker.addListener('dragend',function(event) {
+             var latitude = event.latLng.lat();
+             var longitude = event.latLng.lng();
+             var latlng = {lat: latitude, lng: longitude};
+             geocoder.geocode({'location': latlng}, function(results, status) {
+                 if (status === google.maps.GeocoderStatus.OK) {
+                     address=results[0].formatted_address;
+                     $("#address").val(address);
                      $("#latitude").val(latitude);
                      $("#longitude").val(longitude);
-                     map.setCenter(place.geometry.location);
-                     map.setZoom(17);  // Why 17? Because it looks good.
+                     if(filename=='map.html'){
+                         window.sessionStorage.setItem("userDataLongitude", longitude)
+                         window.sessionStorage.setItem("userDataLatitude", latitude)
+                         window.sessionStorage.setItem("userDataAddress", address)
+                     }
+                 } else {
+                     alert('Geocode was not successful for the following reason: ' + status);
                  }
-             }
-         })
+             });
+         });
+         marker.addListener('dragstart',function(event) {
+             //console.log(event);
+             //console.log("stat"+event.latLng.lat());
+             //console.log("stat"+event.latLng.lng());
+         });
+         if(document.getElementById('address')&&$("#address").attr('type')!='hidden'){
+             var autocomplete = new google.maps.places.Autocomplete(document.getElementById('address'));
+             autocomplete.bindTo('bounds', map);
+             autocomplete.addListener('place_changed', function() {
+                 var place = autocomplete.getPlace();
+                 if(place.geometry){
+                     if (place.geometry.viewport) {
+                         map.fitBounds(place.geometry.viewport);
+                         latitude=place.geometry.location.lat();
+                         longitude=place.geometry.location.lng();
+                         $("#latitude").val(latitude);
+                         $("#longitude").val(longitude);
+                     } else {
+                         latitude=place.geometry.location.lat();
+                         longitude=place.geometry.location.lng();
+                         $("#latitude").val(latitude);
+                         $("#longitude").val(longitude);
+                         map.setCenter(place.geometry.location);
+                         map.setZoom(17);  // Why 17? Because it looks good.
+                     }
+                 }
+             })
+         }
+
      }
 
 
@@ -749,4 +820,111 @@ var serviceOrderValidator = $("#service-order-form").validate({
 
         });
     }
+});
+
+
+//single order
+$(document).on('click','.single-order',function(e){
+    e.preventDefault();
+    order_id=$(this).data('id');
+    //var userData = window.sessionStorage.getItem("userData");
+    //userData=JSON.parse(userData);
+    user_id=userData.id;
+    if(userData.type=='customer'){
+        if(user_id){
+            $(".loader").show();
+            $.ajax({
+                type: "GET",
+                url: makeURL('foreraa_orders/'+order_id+'?user_id='+user_id),
+                data:$("#service-order-form").serialize(),
+                success: function (msg) {
+                    if(msg.success){
+                        window.sessionStorage.setItem("orderData",JSON.stringify(msg.result));
+                        window.location.href='single-order.html';
+                    }
+
+                }
+            });
+        }
+    }else{
+        $(".loader").show();
+        $.ajax({
+            type: "GET",
+            url: makeURL('foreraa_orders/'+order_id+'?delegate_id='+user_id),
+            data:$("#service-order-form").serialize(),
+            success: function (msg) {
+                if(msg.success){
+                    window.sessionStorage.setItem("orderData",JSON.stringify(msg.result));
+                    window.location.href='single-order.html';
+                }
+
+            }
+        });
+    }
+
+});
+//single delegate order
+$(document).on('click','.single-delegate-order',function(e){
+    e.preventDefault();
+    order_id=$(this).data('id');
+    //var userData = window.sessionStorage.getItem("userData");
+    //userData=JSON.parse(userData);
+    statues=$(this).data('statues')
+    $(".loader").show();
+    $.ajax({
+        type: "GET",
+        url: makeURL('foreraa_orders/'+order_id+'?statues=new&delegate_id=null'),
+        data:$("#service-order-form").serialize(),
+        success: function (msg) {
+            if(msg.success){
+                window.sessionStorage.setItem("orderData",JSON.stringify(msg.result));
+                window.location.href='single-order.html';
+            }
+
+        }
+    });
+});
+$(document).on('click','.confirmOrder',function(e){
+    e.preventDefault();
+    console.log('confirmOrder');
+    el=$(this);
+    order_id=$(this).data('id');
+    user_id=userData.id;
+    console.log(userData)
+    if(user_id){
+        $.ajax({
+            type: "POST",
+            url: makeURL('foreraa_users/'+user_id+'/confirmOrder'),
+            data:{"order_id":order_id},
+            success: function (msg) {
+                if(msg.success){
+                   el.remove();
+                }
+
+            }
+        });
+    }
+});
+//logout
+$(document).on('click','#logoutMenu',function(e){
+    e.preventDefault();
+    window.sessionStorage.removeItem("userData");
+    window.location.href="index.html";
+});
+$(document).on('click','.single-delegate',function(e){
+    e.preventDefault();
+    delegate_id=$(this).data('id');
+    $.ajax({
+        type: "GET",
+        url: makeURL('foreraa_users/'+delegate_id+'?type=delegate'),
+        data:$("#service-order-form").serialize(),
+        success: function (msg) {
+            if(msg.success){
+                window.sessionStorage.setItem("delegateData",JSON.stringify(msg.result));
+                window.location.href='single-delegate.html';
+            }
+
+        }
+    });
+
 });

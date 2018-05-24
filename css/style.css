@@ -2041,3 +2041,7 @@ a:hover{
 .position-initial{
 	position: initial!important;
 }
+#getMyLocation,#getAllServices,#getAllOrders{
+	line-height: 1.8;
+	height: 40px;
+}

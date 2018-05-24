@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Select Your Location</title>
+    <title>Services</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" href="images/favicon.png" type="image/x-icon">
@@ -14,7 +14,6 @@
     <!-- Custom Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/orange.css">
-    <script type="text/javascript" src="cordova.js"></script>
 </head>
 <body class="page-body">
 <!--====== LOADER =====-->
@@ -39,41 +38,60 @@
     <!--========= PAGE-COVER =========-->
     <div class="page-cover">
         <div class="container-fluid">
-            <h3><span class="cover-left-icon pull-left"><i class="fa fa-user-plus"></i></span>Location<span class="cover-right-icon pull-right"><i class="fa fa-user-plus"></i></span></h3>
+            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span><span id="order-title"></span><span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
         </div><!-- end container-fluid -->
     </div><!-- end page-cover -->
     <!--=================== PAGE-WRAPPER ================-->
-    <section class="page-wrapper innerpage-section-padding" style="padding: 0px">
-        <div id="register-page" >
-            <div class="container-fluid text-center" style="padding: 0px">
-                <div id="map" style="height: 88.6vh;"></div>
-                <input type="hidden" id="latitude">
-                <input type="hidden" id="longitude">
-                <input type="hidden" id="address">
-                <div class="clerfix"></div>
-                <button id="getMyLocation" style="  position: fixed; bottom: 0;left: 0; width: 50%;border-radius: 0;" class="btn btn-orange btn-radius"><i class="far fa-compass"></i> Get Location</button>
-                <button id="getAllServices" style="    position: fixed; bottom: 0;right: 0;width: 50%;border-radius: 0;    border-left: 1px #ff8e6b solid;"  class="btn btn-orange btn-radius hidden"><i class="fa fa-th-large"></i> Services </button>
-                <button id="getAllOrders" href="delegate-orders.html" style="position: fixed; bottom: 0;right: 0;width: 50%;border-radius: 0;border-left: 1px #ff8e6b solid;"  class="btn btn-orange btn-radius hidden"><i class="fa fa-th-large"></i> Orders</button>
+    <section class="page-wrapper innerpage-section-padding">
+        <div id="user-profile-page">
+            <div class="container-fluid  text-center">
+                <div id="user-profile-img">
+                    <img src="images/user-profile.jpg" id="delegateImage" class="img-responsive img-circle" alt="user-img">
+                </div>
+                <div class="innerpage-heading user-profile-heading">
+                    <h3 id="delegateTitleName"></h3>
+                    <hr>
+                </div><!-- end innerpage-heading -->
+
+                <div class="edit-link text-center" id="delegateRating">
+
+                </div><!-- end edit-link -->
+
+                <div class="table-responsive text-left">
+                    <table class="table table-hover table-striped">
+                        <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td id="delegateName"></td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number</td>
+                            <td id="delegatePhone"></td>
+                        </tr>
+                        <tr>
+                            <td>Orders Numbers</td>
+                            <td id="delegateOrders"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!-- end table-responsive -->
             </div><!-- end container-fluid -->
-        </div><!-- end register-page -->
+        </div><!-- end user-profile-page -->
     </section><!-- end page-wrapper -->
     <!--=============== FOOTER ===============-->
     <!--<section w3-include-html="include/footer.html" id="footer" class="section-padding"></section>-->
     <!-- end footer -->
-</div>
-<!-- end canvas -->
+</div><!-- end canvas -->
 <!-- Page Scripts Starts -->
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo"> </script>
 <script src="js/custom-navigation.js"></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places" async defer></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places"> </script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/index.js"></script>
-<!--<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo"></script>-->
-<!--
-<script type="text/javascript" src="js/markerwithlabel.js"></script>
-<script type="text/javascript" src="js/infobox.js"></script>
-<script src="js/map.js"></script>-->
+<script src="js/single_delegate.js"></script>
 <!-- Page Scripts Ends -->
 </body>
+
 </html>

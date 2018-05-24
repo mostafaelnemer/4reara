@@ -1,10 +1,24 @@
+userData=window.sessionStorage.getItem('userData');
+console.log(userData)
+if(userData){
+    userData=JSON.parse(userData);
+    console.log('hhhhhhhhhhhhhhhhhhhh')
+    console.log(userData)
+    if(userData.type=='customer'){
+        $("#getAllServices").removeClass('hidden');
+    }else{
+        $("#getAllOrders").removeClass('hidden');
+        $("#user-profile-sidebar a[href='services.html']").addClass('hidden');
+    }
+}
 function initMap(latitudeData,longitudeData) {
     var secheltLoc = new google.maps.LatLng(latitudeData,longitudeData);
     var map = new google.maps.Map(document.getElementById('mapDiv'), {
         zoom: 12,
         center: secheltLoc,
         draggable:false,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        gestureHandling: 'greedy'
     });
 
     function initMarkers(map, markerData) {
