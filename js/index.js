@@ -171,7 +171,7 @@ function onDeviceReady() {
    // console.log("start get location ");
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-    cordova.plugins.locationAccuracy.canRequest(function(canRequest){
+   /* cordova.plugins.locationAccuracy.canRequest(function(canRequest){
         if(canRequest){
             cordova.plugins.locationAccuracy.request(function (success){
                 //console.log("Successfully requested accuracy: "+success.message);
@@ -185,7 +185,7 @@ function onDeviceReady() {
                 }
             }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
         }
-    });
+    });*/
 
     $(document).on('click',"#fb_login",facebookLogin);
     var registerValidator = $("#register-form").validate({
@@ -449,10 +449,11 @@ $(document).on('click','#delivery_place',function(){
 
 /*single parcel end code*/
  function onSuccess(position){
+     var longitude = position.coords.longitude;
+     var latitude = position.coords.latitude;
      if($("#map").length>0){
          //console.log("succsess get location");
-         var longitude = position.coords.longitude;
-         var latitude = position.coords.latitude;
+
          var latLong = new google.maps.LatLng(latitude, longitude);
          var mapOptions = {
              center: latLong,
@@ -991,5 +992,62 @@ $(document).on('click','.single-delegate',function(e){
 
         }
     });
+});
+$(document).on('click','.chat-now',function(e){
+    e.preventDefault();
+    order_id=$(this).attr('data-order-id');
+    orderData=window.sessionStorage.getItem("orderData")
+    if(orderData){
+        orderData=JSON.parse(orderData);
+        if(orderData.id==order_id){
+            window.location.href="single-order-chats.html";
+        }
+    }
+});
+function getChatData(orderData,userData){
+    $.ajax({
+        type: "GET",
+        url: makeURL('foreraa_orders/'+orderData.id+'/chats'),
+        success: function (msg) {
+            console.log(msg);
+            if(msg.success){
+                html='';
+                if(msg.result.length){
+                    msg.result.forEach(function (item) {
+                        html+='<li class="left clearfix '+((userData.id==item.user_id)?'admin_chat':'')+'"> <span class="chat-img1 '+((userData.id==item.user_id)?'pull-right':'pull-left')+'"> <img src="'+item.image+'" alt="'+item.user_name+'" class="img-circle"> </span> <div class="chat-body1 clearfix"><p><!--<span class="username label '+((userData.id==item.user_id)?'label-info':'label-success')+'">'+item.user_name+'</span>--> '+item.message+'</p> <div class="chat_time '+((userData.id==item.user_id)?'pull-left':'pull-right')+'">'+formatDate(new Date(item.add_date))+' '+formatTime(new Date(item.add_date))+'</div> </div> </li>';
+                    });
+                }else{
+                    //html='<div id="noData" class="text-center">No Messages</div>';
+                    html='<li id="noMessageDiv" class="left clearfix"><div class="chat-body1 clearfix" style="margin: 0;"><p class="text-center">No Message</p></div></li>';
+                }
+                $(".chat_area ul.list-unstyled").html(html);
+            }
+        }
+    });
+}
+$(document).on('click','#sendChatMessage',function(e){
+    e.preventDefault();
+    var userData = window.sessionStorage.getItem("userData");
+    userData=JSON.parse(userData);
+    order_id=$("#chatOrderID").val();
+    user_id=userData.id;
+    message=$("#chatMessage").val();
 
+    if(message.length){
+        $(".message_write").removeClass('has-error');
+        $.ajax({
+            type: "POST",
+            url: makeURL('foreraa_orders/'+order_id+'/addChat'),
+            data:{"user_id":user_id,"order_id":order_id,"message":message},
+            success: function (msg) {
+                if(msg.success){
+                  $("#noMessageDiv").remove();
+                  $("#chatMessage").val('')
+                  $(".chat_area ul.list-unstyled").append('<li class="left clearfix admin_chat"> <span class="chat-img1 pull-right"> <img src="'+userData.image+'" alt="'+userData.name+'" class="img-circle"> </span> <div class="chat-body1 clearfix"> <p>'+message+'</p> <div class="chat_time pull-left">'+formatDate(new Date())+' '+formatTime(new Date())+'</div> </div> </li>');
+                }
+            }
+        });
+    }else{
+        $(".message_write").addClass('has-error');
+    }
 });

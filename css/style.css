@@ -2045,7 +2045,7 @@ a:hover{
 	line-height: 1.8;
 	height: 40px;
 }
-.call-now{
+.call-now,.chat-now{
 	font-size: 20px;
 	padding: 20px;
 	border-radius: 35px;
