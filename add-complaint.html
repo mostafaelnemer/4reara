@@ -78,24 +78,27 @@
     <!--========= PAGE-COVER =========-->
     <div class="page-cover">
         <div class="container-fluid">
-            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span>My Orders<span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
+            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span>Complaint<span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
         </div><!-- end container-fluid -->
     </div><!-- end page-cover -->
     <!--=================== PAGE-WRAPPER ================-->
     <section class="page-wrapper innerpage-section-padding">
-        <div id="register-page">
+        <div id="edit-user-page">
             <div class="container-fluid text-center">
-                <div class="col-xs-12 col-sm-offset-3 col-sm-6">
-                    <div class="panel panel-default" id="my_orders">
-
-                        <!--<ul class="list-group" id="my_orders">
-
-                        </ul>-->
+                <div class="innerpage-heading text-center">
+                    <h3>Add Complaint</h3>
+                </div><!-- end innerpage-heading -->
+                <form class="custom-form" id="add-complaint-form">
+                    <div id="response"></div>
+                    <input type="hidden" name="user_id" class="user_id">
+                    <div class="form-group">
+                        <textarea class="form-control" id="complaint" name="complaint" rows="5" placeholder="Complaint"></textarea>
+                        <label for="complaint"></label>
                     </div>
-                </div>
-            </div>
-
-        </div>
+                    <button class="btn btn-orange btn-radius">Add</button>
+                </form>
+            </div><!-- end container-fluid -->
+        </div><!-- end edit-user-page -->
 
     </section><!-- end page-wrapper -->
     <!--=============== FOOTER ===============-->
@@ -111,7 +114,6 @@
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/index.js"></script>
 <script src="https://apis.google.com/js/api.js"></script>
-<script src="js/my_orders.js"></script>
 <!-- Page Scripts Ends -->
 </body>
 

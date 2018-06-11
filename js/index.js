@@ -10,6 +10,8 @@ var userData = window.sessionStorage.getItem("userData");
 if(userData){
 
     userData=JSON.parse(userData);
+    user_id=userData.id
+    $("#user_id,.user_id").val(user_id);
 }
 
 //console.log(userData);
@@ -155,13 +157,12 @@ function updateStatusCallback(response) {
 function onDeviceReady() {
     if(userData){
         $("#logoutMenu").removeClass('hidden');
-        if(filename=='map.html'){
-            if(userData.type=='customer'){
-                $("#getAllServices").removeClass('hidden');
-            }else{
-                $("#getAllOrders").removeClass('hidden');
-                $("#serviceMenu").addClass('hidden');
-            }
+        console.log(userData);
+        if(userData.type=='customer'){
+            $("#getAllServices").removeClass('hidden');
+        }else{
+            $("#getAllOrders").removeClass('hidden');
+            $("#serviceMenu").addClass('hidden');
         }
 
     }
@@ -256,7 +257,51 @@ function onDeviceReady() {
     $(".cancel").click(function() {
         registerValidator.resetForm();
     });
+    /*complaint*/
+    var addComplaint = $("#add-complaint-form").validate({
+        errorPlacement: function(error, element) {
+            // Append error within linked label
+            $( element )
+                .closest( "form" )
+                .find( "label[for='" + element.attr( "id" ) + "']" )
+                .append( error );
+            //$(element).parent().parent().addClass('has-error');
 
+        },
+        highlight: function(element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function(element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: "span",
+        rules : {
+            complaint : {
+                required:true,
+                minlength : 50
+            },
+        },
+        messages: {
+        },
+        submitHandler: function() {
+            //alert('start');
+            //$("#charge-btn").attr("disabled", true);
+            $(".loader").show();
+            $.ajax({
+                type: "POST",
+                url: makeURL('foreraa_complaints'),
+                data: $("#add-complaint-form").serialize(),
+                success: function (msg) {
+                    getMessages(msg,"#response")
+                    if(msg.success){
+                        $("#add-complaint-form")[0].reset();
+                    }
+                    $(".loader").hide();
+                }
+            });
+        }
+    });
+    /*complaint*/
     /*$(document).on('submit',"#register-form",function(e){
         e.preventDefault();
         $.ajax({
@@ -822,7 +867,27 @@ var serviceOrderValidator = $("#service-order-form").validate({
     }
 });
 
+//single complaint
+$(document).on('click','.single-complaint',function(e){
+    e.preventDefault();
+    complaint_id=$(this).data('id');
+    user_id=userData.id;
+    if(user_id){
+        $(".loader").show();
+        $.ajax({
+            type: "GET",
+            url: makeURL('foreraa_complaints/'+complaint_id+'?user_id='+user_id),
+            data:$("#service-order-form").serialize(),
+            success: function (msg) {
+                if(msg.success){
+                    window.sessionStorage.setItem("complaintData",JSON.stringify(msg.result));
+                    window.location.href='single-complaint.html';
+                }
 
+            }
+        });
+    }
+});
 //single order
 $(document).on('click','.single-order',function(e){
     e.preventDefault();

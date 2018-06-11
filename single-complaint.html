@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <title>Services</title>
     <meta charset="utf-8">
@@ -15,45 +14,6 @@
     <!-- Custom Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/orange.css">
-    <style>
-        .visible-xs {
-            display: inline-block !important;
-        }
-        .block {
-            display: block !important;
-            width: 100%;
-            height: 1px !important;
-        }
-        ul.c-controls li {
-            margin-top: 8px;
-            float: left;
-        }
-        ul.c-controls li a {
-            font-size: 1.7em;
-            padding: 11px 10px 6px;
-        }
-        ul.c-controls li a i {
-            min-width: 24px;
-            text-align: center;
-        }
-        ul.c-controls li a:hover {
-            background-color: rgba(51, 51, 51, 0.2);
-        }
-        .c-toggle {
-            font-size: 1.7em;
-        }
-        .name {
-            font-size: 1.7em;
-            font-weight: 700;
-        }
-        .c-info {
-            padding: 5px 10px;
-            font-size: 1.25em;
-        }
-        .img-responsive{
-            max-width: 50% !important;
-        }
-    </style>
 </head>
 <body class="page-body">
 <!--====== LOADER =====-->
@@ -78,25 +38,23 @@
     <!--========= PAGE-COVER =========-->
     <div class="page-cover">
         <div class="container-fluid">
-            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span>My Orders<span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
+            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span><span id="complaint-title"></span><span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
         </div><!-- end container-fluid -->
     </div><!-- end page-cover -->
     <!--=================== PAGE-WRAPPER ================-->
     <section class="page-wrapper innerpage-section-padding">
-        <div id="register-page">
-            <div class="container-fluid text-center">
-                <div class="col-xs-12 col-sm-offset-3 col-sm-6">
-                    <div class="panel panel-default" id="my_orders">
 
-                        <!--<ul class="list-group" id="my_orders">
-
-                        </ul>-->
-                    </div>
-                </div>
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+            <div id="response"></div>
+            <div class="form-group col-xs-12">
+                <label for="complaint-details">Complaint details</label>
+                <textarea name="details" disabled class="form-control" id="complaint-details" cols="30" rows="10"></textarea>
             </div>
 
-        </div>
 
+
+
+        </div>
     </section><!-- end page-wrapper -->
     <!--=============== FOOTER ===============-->
     <!--<section w3-include-html="include/footer.html" id="footer" class="section-padding"></section>-->
@@ -110,8 +68,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places"> </script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/index.js"></script>
-<script src="https://apis.google.com/js/api.js"></script>
-<script src="js/my_orders.js"></script>
+<script src="js/single-complaint.js"></script>
 <!-- Page Scripts Ends -->
 </body>
 
