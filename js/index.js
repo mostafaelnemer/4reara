@@ -13,7 +13,7 @@ if(userData){
     user_id=userData.id
     $("#user_id,.user_id").val(user_id);
 }
-
+$(".innerpage-section-padding").css({"min-height":$(window).height()-60})
 //console.log(userData);
 url = window.location.pathname;
 var filename = url.substring(url.lastIndexOf('/')+1);
@@ -401,7 +401,8 @@ $(document).on('click','#getAllOrders',function(e){
     e.preventDefault();
     window.location.href="delegate-orders.html";
 })
-$(document).on('click','#getAllServices',function(){
+$(document).on('click','#getAllServices,#serviceMenu',function(e){
+    e.preventDefault();
     $(".loader").show();
     longitude=$("#longitude").val();
     latitude=$("#latitude").val();
