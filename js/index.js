@@ -171,7 +171,7 @@ function onDeviceReady() {
    // console.log("start get location ");
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-   /* cordova.plugins.locationAccuracy.canRequest(function(canRequest){
+    cordova.plugins.locationAccuracy.canRequest(function(canRequest){
         if(canRequest){
             cordova.plugins.locationAccuracy.request(function (success){
                 //console.log("Successfully requested accuracy: "+success.message);
@@ -185,7 +185,7 @@ function onDeviceReady() {
                 }
             }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
         }
-    });*/
+    });
 
     $(document).on('click',"#fb_login",facebookLogin);
     var registerValidator = $("#register-form").validate({
