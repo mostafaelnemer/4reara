@@ -6,6 +6,9 @@ window.sessionStorage.removeItem("key"); //Remove Item
 window.sessionStorage.clear();//Clear storage
 */
 //  window.sessionStorage.clear();\
+  var imported = document.createElement('script');
+ imported.src = 'js/lang.js';
+    document.head.appendChild(imported);
 
 $(document).ready(function () {
     if (localStorage.getItem("lang") == "ar") {
@@ -22,7 +25,7 @@ $(document).ready(function () {
 $("#lang").on('change', function () {
     alert($('#lang option:selected').val());
     localStorage.setItem("lang", $('#lang option:selected').val());
-    alert("feeeettt  " + localStorage.getItem("lang"));
+    //alert("feeeettt  " + localStorage.getItem("lang"));
     location.reload();
 
 });
