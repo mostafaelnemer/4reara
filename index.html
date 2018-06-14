@@ -1,93 +1,129 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <title>Login</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" href="images/favicon.png" type="image/x-icon">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300italic,800italic,800,700italic,700,600italic,600,400italic,300%7CRoboto+Condensed:400,400i,700,700i%7CGreat+Vibes" rel="stylesheet">
-    <!-- Bootstrap Stylesheet -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Font Awesome Stylesheet -->
-    <link rel="stylesheet" href="css/fontawesome-all.min.css">
-    <!-- Custom Stylesheets -->
-    <link rel="stylesheet" href="css/style.css">
-    <!--<link rel="stylesheet" href="css/orange.css">-->
-    <link rel="stylesheet" href="css/purple.css">
-    <link rel="stylesheet" href="js/header-script.js">
-    <script type="text/javascript" src="cordova.js"></script>
-</head>
-<body class="page-body">
-<!--====== LOADER =====-->
-<div class="loader"></div>
-<!--============ SIDE-NAV =============-->
-<div w3-include-html="include/side_nav.html" class="sidenav-content"></div>
-<!-- end sidenav-content -->
-<!--=============== FULLSCR-NAV ==============-->
-<div w3-include-html="include/fullscr_nav.html" id="fullscr-nav" class="fullscr-navigation"></div>
-<!-- end fullscr-nav -->
-<!--================ SHOPPING-CART ==============-->
-<div w3-include-html="include/shopping_cart.html" id="shopping-cart-sidebar" class="shc-sidebar"></div>
-<!-- shopping-cart-sidebar -->
-<!--============== USER-PROFILE-SIDEBAR =============-->
-<div w3-include-html="include/user_profile_sidebar.html" id="user-profile-sidebar" class="user-prf-sidebar"></div>
-<!-- end user-profile-sidebar -->
-<div class="canvas">
-    <div class="overlay-black"></div>
-    <!--========= HEADER =========-->
-    <div w3-include-html="include/header.html" class="header"></div>
-    <!-- end header -->
-    <!--========= PAGE-COVER =========-->
-    <div class="page-cover">
-        <div class="container-fluid">
-            <h3><span class="cover-left-icon pull-left"><i class="fa fa-lock"></i></span>Login<span class="cover-right-icon pull-right"><i class="fa fa-lock"></i></span></h3>
-        </div><!-- end container-fluid -->
-    </div><!-- end page-cover -->
-    <!--=================== PAGE-WRAPPER ================-->
-    <section class="page-wrapper innerpage-section-padding">
-        <div id="login-page" >
-            <div class="container-fluid text-center">
-                <div class="innerpage-heading">
-                    <h3>Login</h3>
-                    <p>Login to start add your orders </p>
-                </div><!-- end innerpage-heading -->
-                <form class="custom-form" id="login-form">
-                    <div id="response"></div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" name="phone" class="form-control" placeholder="User Phone"  required/>
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="password" name="password" class="form-control" placeholder="Password"  required/>
-                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                        </div>
-                    </div>
-                    <button class="btn btn-orange btn-radius">Login</button>
-                </form>
-                <!--<div id="map" style="height: 500px"></div>-->
-                <div class="form-page-links">
-                    <!--<a href="forget-password.html">Forgot Password ?</a>-->
-                    <p> New Here ? <a href="register.html">Register Now</a></p>
-                </div><!-- end form-page-links -->
-            </div><!-- end container-fluid -->
-        </div><!-- end login-page -->
-    </section><!-- end page-wrapper -->
-    <!--=============== FOOTER ===============-->
-    <!--<section w3-include-html="include/footer.html" id="footer" class="section-padding"></section>-->
-    <!-- end footer -->
-</div><!-- end canvas -->
-<!-- Page Scripts Starts -->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/custom-navigation.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo"> </script>
-<script src="js/jquery.validate.min.js"></script>
-<script src="js/index.js"></script>
-<script src="js/login.js"></script>
-<!-- Page Scripts Ends -->
-</body>
+    <head>
+        <title>Login</title>
+        <script src="js/lang.js"></script>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="icon" href="images/favicon.png" type="image/x-icon">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300italic,800italic,800,700italic,700,600italic,600,400italic,300%7CRoboto+Condensed:400,400i,700,700i%7CGreat+Vibes" rel="stylesheet">
+        <!-- Bootstrap Stylesheet -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- Font Awesome Stylesheet -->
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <!-- Custom Stylesheets -->
+        <link rel="stylesheet" href="css/style.css">
+        <!--<link rel="stylesheet" href="css/orange.css">-->
+        <link rel="stylesheet" href="css/purple.css">
+        <link rel="stylesheet" href="js/header-script.js">
+        <script type="text/javascript" src="cordova.js"></script>
+    </head>
+    <body class="page-body">
+        <!--====== LOADER =====-->
+        <div class="loader"></div>
+        <!--============ SIDE-NAV =============-->
+        <div w3-include-html="include/side_nav.html" class="sidenav-content"></div>
+        <!-- end sidenav-content -->
+        <!--=============== FULLSCR-NAV ==============-->
+        <div w3-include-html="include/fullscr_nav.html" id="fullscr-nav" class="fullscr-navigation"></div>
+        <!-- end fullscr-nav -->
+        <!--================ SHOPPING-CART ==============-->
+        <div w3-include-html="include/shopping_cart.html" id="shopping-cart-sidebar" class="shc-sidebar"></div>
+        <!-- shopping-cart-sidebar -->
+        <!--============== USER-PROFILE-SIDEBAR =============-->
+        <div w3-include-html="include/user_profile_sidebar.html" id="user-profile-sidebar" class="user-prf-sidebar"></div>
+        <!-- end user-profile-sidebar -->
+        <div class="canvas">
+            <div class="overlay-black"></div>
+            <!--========= HEADER =========-->
+            <div w3-include-html="include/header.html" class="header"></div>
+            <!-- end header -->
+            <!--========= PAGE-COVER =========-->
+            <div class="page-cover">
+                <div class="container-fluid">
+                    <h3 trans-lang-html="login"><span class="cover-left-icon pull-left"><i class="fa fa-lock"></i></span><span class="cover-right-icon pull-right"><i class="fa fa-lock"></i></span></h3>
+                </div><!-- end container-fluid -->
+            </div><!-- end page-cover -->
+            <!--=================== PAGE-WRAPPER ================-->
+            <section class="page-wrapper innerpage-section-padding">
+                <div id="login-page" >
+                    <select id="lang">
+                        <option value="">select lang</option>
+                        <option value="en">en</option>
+                        <option value="ar">arrr</option>
+                    </select>
+                    <div class="container-fluid text-center">
+                        <div class="innerpage-heading">
+                            <h3 trans-lang-html="login"></h3>
+                            <p  trans-lang-html="login_to_start_add_your_orders"> </p>
+                        </div><!-- end innerpage-heading -->
+                        <form class="custom-form" id="login-form">
+                            <div id="response"></div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input  trans-lang-placeholder="user_phone" type="text" name="phone" class="form-control" placeholder=""  required/>
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input trans-lang-placeholder="password"  type="password" name="password" class="form-control" placeholder="Password"  required/>
+                                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                </div>
+                            </div>
+                            <button class="btn btn-orange btn-radius" trans-lang-html="login" ></button>
+                        </form>
+                        <!--<div id="map" style="height: 500px"></div>-->
+                        <div class="form-page-links">
+                            <!--<a href="forget-password.html">Forgot Password ?</a>-->
+                            <p trans-lang-html="new_here"> <a href="register.html" trans-lang-html="register_now"></a></p>
+                        </div><!-- end form-page-links -->
+                    </div><!-- end container-fluid -->
+                </div><!-- end login-page -->
+            </section><!-- end page-wrapper -->
+            <!--=============== FOOTER ===============-->
+            <!--<section w3-include-html="include/footer.html" id="footer" class="section-padding"></section>-->
+            <!-- end footer -->
+        </div><!-- end canvas -->
+        <!-- Page Scripts Starts -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/custom-navigation.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/login.js"></script>
+        <!-- Page Scripts Ends -->
+        <script type="text/javascript">
+//$(document).ready(function () {
+//    if (localStorage.getItem("lang") == "ar") {
+//      //  document.getElementById("password").placeholder = strings.password;
+//       // document.getElementById("phone").placeholder = strings.user_phone;
+//
+//    }
+//    if (localStorage.getItem("lang") == "en") {
+//        //document.getElementById("password").placeholder = strings.password;
+//       // document.getElementById("phone").placeholder = strings.user_phone;
+//
+//    }
+//});
+//$("#lang").on('change', function () {
+//    alert($('#lang option:selected').val());
+//    localStorage.setItem("lang", $('#lang option:selected').val());
+//    alert("feeeettt  " + localStorage.getItem("lang"));
+//    location.reload();
+//
+//});
+//$("[trans-lang-html]").each(function () {
+//    console.log(strings[$(this).attr('trans-lang-html')]);
+//    $(this).html(strings[$(this).attr('trans-lang-html')]);
+//})
+//$("[trans-lang-placeholder]").each(function () {
+//    console.log(strings[$(this).attr('trans-lang-placeholder')]);
+//    $(this).attr('placeholder', strings[$(this).attr('trans-lang-placeholder')]);
+//});
+//        </script>
+    </body>
 </html>

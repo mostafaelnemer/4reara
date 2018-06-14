@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <title>Services</title>
+        <script src="js/lang.js"></script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" href="images/favicon.png" type="image/x-icon">
@@ -49,29 +51,29 @@
             <div id="response"></div>
             <!-- TAB NAVIGATION -->
             <ul class="nav nav-tabs" role="tablist">
-                <li class="active col-xs-6 text-center"><a href="#Location" role="tab" data-toggle="tab">Location</a></li>
-                <li class="col-xs-6 text-center"><a href="#Details" role="tab" data-toggle="tab">Details</a></li>
+                <li class="active col-xs-6 text-center"><a href="#Location" role="tab" data-toggle="tab" trans-lang-html="location"></a></li>
+                <li class="col-xs-6 text-center"><a href="#Details" role="tab" data-toggle="tab" trans-lang-html="details" ></a></li>
             </ul>
             <!-- TAB CONTENT -->
             <div class="tab-content">
                 <div class="tab-pane fade" id="Details">
                     <div class="clearfix" style="height: 20px;"></div>
                     <div class="form-group col-xs-12">
-                        <label for="order_place_of_delivery">Place of Delivery</label>
-                        <a href="javascript:void(0)" id="order_place_of_delivery" style="display:inline-table;" class="form-control">
+                        <label for="order_place_of_delivery" trans-lang-html="place_of_delivery"></label>
+                        <a trans-lang-html="click_here_to_choose_the_place_of_delivery" href="javascript:void(0)" id="order_place_of_delivery" style="display:inline-table;" class="form-control">
                             <span class="pull-right"><i class="fa fa-map-marker"></i></span>
-                            Click here to choose the place of delivery
+                           
                         </a>
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="order_delivery_place">Delivery Place</label>
-                        <a href="javascript:void(0)" id="order_delivery_place" style="display:inline-table;" class="form-control">
+                        <label for="order_delivery_place" trans-lang-html="delivery_place"></label>
+                        <a trans-lang-html="click_here_to_choose_the_place_of_delivery"  href="javascript:void(0)" id="order_delivery_place" style="display:inline-table;" class="form-control">
                             <span class="pull-right"><i class="fa fa-map-marker"></i></span>
-                            Click here to choose the delivery Place
+                            
                         </a>
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="order_details">Order details</label>
+                        <label for="order_details" trans-lang-html="order_details"></label>
                         <textarea name="details" disabled class="form-control" id="order_details" cols="30" rows="10"></textarea>
                         <input type="hidden" name="user_id" id="user_id">
                         <input type="hidden" name="duration" data-element="#duration" id="durationInput">
@@ -85,15 +87,15 @@
                         <input type="hidden" name="delivery_place_address" data-element="#delivery_place" id="delivery_place_address">
                     </div>
                     <div class="form-group col-xs-4">
-                        <label for="distance">distance</label>
+                        <label for="distance"  trans-lang-html="distance"></label>
                         <p id="distance" class="form-control">0 KM</p>
                     </div>
                     <div class="form-group col-xs-4">
-                        <label for="duration">duration</label>
+                        <label for="duration" trans-lang-html="duration" ></label>
                         <p id="duration" class="form-control">0 min</p>
                     </div>
                     <div class="form-group col-xs-4">
-                        <label for="cost">Cost of service</label>
+                        <label for="cost" trans-lang-html="cost_of_service"></label>
                         <p data-cost="250" id="cost" class="form-control">250 $</p>
                     </div>
 

@@ -5,7 +5,41 @@ var value = window.sessionStorage.getItem("key");// Get item
 window.sessionStorage.removeItem("key"); //Remove Item
 window.sessionStorage.clear();//Clear storage
 */
-//  window.sessionStorage.clear();
+//  window.sessionStorage.clear();\
+
+$(document).ready(function () {
+    if (localStorage.getItem("lang") == "ar") {
+      //  document.getElementById("password").placeholder = strings.password;
+       // document.getElementById("phone").placeholder = strings.user_phone;
+
+    }
+    if (localStorage.getItem("lang") == "en") {
+        //document.getElementById("password").placeholder = strings.password;
+       // document.getElementById("phone").placeholder = strings.user_phone;
+
+    }
+});
+$("#lang").on('change', function () {
+    alert($('#lang option:selected').val());
+    localStorage.setItem("lang", $('#lang option:selected').val());
+    alert("feeeettt  " + localStorage.getItem("lang"));
+    location.reload();
+
+});
+function translate(){
+$("[trans-lang-html]").each(function () {
+    console.log(strings[$(this).attr('trans-lang-html')]);
+    $(this).html(strings[$(this).attr('trans-lang-html')]);
+    $(this).removeAttr('trans-lang-html')
+})
+$("[trans-lang-placeholder]").each(function () {
+    console.log(strings[$(this).attr('trans-lang-placeholder')]);
+    $(this).attr('placeholder', strings[$(this).attr('trans-lang-placeholder')]);
+    $(this).removeAttr('trans-lang-placeholder')
+});
+}
+translate();
+        
 var userData = window.sessionStorage.getItem("userData");
 if(userData){
 
@@ -62,6 +96,20 @@ function includeHTML() {
             }
             xhttp.open("GET", file, true);
             xhttp.send();
+            translate();
+//            elmnt.find($("[trans-lang-html]").each(function () {
+//                console.log(strings[$(this).attr('trans-lang-html')]);
+//                $(this).html(strings[$(this).attr('trans-lang-html')]);
+//        }));
+//        $("[trans-lang-html]").each(function () {
+//                console.log(strings[$(this).attr('trans-lang-html')]);
+//                $(this).html(strings[$(this).attr('trans-lang-html')]);
+//        })
+//elmnt.find("[trans-lang-html]").each(function () {
+//                console.log(strings[$(this).attr('trans-lang-html')]);
+//                $(this).html(strings[$(this).attr('trans-lang-html')]);
+//        });
+            
             /*exit the function:*/
             return;
         }
@@ -171,21 +219,21 @@ function onDeviceReady() {
    // console.log("start get location ");
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-    cordova.plugins.locationAccuracy.canRequest(function(canRequest){
-        if(canRequest){
-            cordova.plugins.locationAccuracy.request(function (success){
-                //console.log("Successfully requested accuracy: "+success.message);
-
-            }, function (error){
-                //console.error("Accuracy request failed: error code="+error.code+"; error message="+error.message);
-                if(error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED){
-                    if(window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")){
-                        cordova.plugins.diagnostic.switchToLocationSettings();
-                    }
-                }
-            }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
-        }
-    });
+//    cordova.plugins.locationAccuracy.canRequest(function(canRequest){
+//        if(canRequest){
+//            cordova.plugins.locationAccuracy.request(function (success){
+//                //console.log("Successfully requested accuracy: "+success.message);
+//
+//            }, function (error){
+//                //console.error("Accuracy request failed: error code="+error.code+"; error message="+error.message);
+//                if(error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED){
+//                    if(window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")){
+//                        cordova.plugins.diagnostic.switchToLocationSettings();
+//                    }
+//                }
+//            }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+//        }
+//    });
 
     $(document).on('click',"#fb_login",facebookLogin);
     var registerValidator = $("#register-form").validate({

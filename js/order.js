@@ -1,3 +1,8 @@
+var view= strings.view;
+var no_delegate= strings.no_delegate;
+var save= strings.save;
+var orderData = window.sessionStorage.getItem("orderData");
+var userData = window.sessionStorage.getItem("userData");
 var orderData = window.sessionStorage.getItem("orderData");
 var userData = window.sessionStorage.getItem("userData");
 console.log(orderData);
@@ -23,7 +28,7 @@ if(orderData){
             for(y=x;y<=5;y++){
                 delegateHtml+='<li><span><i class="fa fa-star-o"></i></span></li>';
             }
-            delegateHtml+='</ul> <a href="#" class="single-delegate" data-id="'+orderData.delegate_id+'">View</a> </div>';
+            delegateHtml+='</ul> <a href="#" class="single-delegate" data-id="'+orderData.delegate_id+'">'+view+'</a> </div>';
         }else{
             delegateHtml='<div class="clearfix"></div><div class="alert alert-info"><i class="fa fa-times-circle"></i> No Delegate</div>';
         }
