@@ -72,7 +72,7 @@ ul{
 }
 
 h1,h2,h3,h4,h5,input,select,textarea, #mySidenav #web-name h2 span, .header-logo h4 span, .header-log h4 a, .dish-list-text h4 a, #footer h3 span, .order-item-info h4 a, .user-profile-heading h3 span{
-	font-family: 'Roboto Condensed', sans-serif;
+	font-family: cocon,'Open Sans',sans-serif;
 }
 
 .page-heading, .flexslider li h1, .page-cover h3{

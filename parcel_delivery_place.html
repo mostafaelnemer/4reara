@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/style.css">
     <!--<link rel="stylesheet" href="css/orange.css">-->
     <link rel="stylesheet" href="css/purple.css">
+    <script type="text/javascript" src="cordova.js"></script>
 </head>
 <body class="page-body">
 <!--====== LOADER =====-->
@@ -40,7 +41,7 @@
     <!--========= PAGE-COVER =========-->
     <div class="page-cover">
         <div class="container-fluid">
-            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span>Delivery Place<span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
+            <h3><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span><span trans-lang-html="delivery_place"></span><span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
         </div><!-- end container-fluid -->
     </div><!-- end page-cover -->
     <!--=================== PAGE-WRAPPER ================-->
@@ -57,7 +58,7 @@
                 <input type="hidden" id="latitude">
                 <input type="hidden" id="longitude">
 
-                <button id="saveDeliveryPlace" style="position: fixed; bottom: 0;left: 0; width: 100%;border-radius: 0;" class="btn btn-orange btn-radius"><i class="far fa-compass"></i> Save Place</button>
+                <button id="saveDeliveryPlace" style="position: fixed; bottom: 0;left: 0; width: 100%;border-radius: 0;" class="btn btn-orange btn-radius"><i class="far fa-compass"></i><span trans-lang-html="save_place"></span></button>
             </div><!-- end container-fluid -->
         </div><!-- end register-page -->
     </section><!-- end page-wrapper -->

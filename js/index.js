@@ -6,22 +6,43 @@ window.sessionStorage.removeItem("key"); //Remove Item
 window.sessionStorage.clear();//Clear storage
 */
 //  window.sessionStorage.clear();\
-  var imported = document.createElement('script');
- imported.src = 'js/lang.js';
+/*start lang js file*/
+var selectedLang=(localStorage.getItem("lang")=='ar'||localStorage.getItem("lang")=='en')?localStorage.getItem("lang"):'en';
+console.log(selectedLang)
+$.getJSON('lang/'+selectedLang+'.json')
+    .done(function (data) {
+        window.strings = data;
+        var strings = data;
+        console.log(data);
+        includeHTML();
+        translate();
+
+    });
+/*console.log(localStorage.getItem("lang"));
+var imported = document.createElement('script');
+if(localStorage.getItem("lang")=="ar"){
+    // alert(localStorage.getItem("lang"));
+    console.log("middle ar");
+    imported.src = 'lang/ar.js';
     document.head.appendChild(imported);
 
-$(document).ready(function () {
-    if (localStorage.getItem("lang") == "ar") {
-      //  document.getElementById("password").placeholder = strings.password;
-       // document.getElementById("phone").placeholder = strings.user_phone;
+}
+else if(localStorage.getItem("lang")=="en"){
+    // alert(localStorage.getItem("lang"));
+    //var imported = document.createElement('script');
+    console.log("middle en");
+    imported.src = 'lang/en.js';
+    document.head.appendChild(imported);
 
-    }
-    if (localStorage.getItem("lang") == "en") {
-        //document.getElementById("password").placeholder = strings.password;
-       // document.getElementById("phone").placeholder = strings.user_phone;
+}else{
+    console.log("default en");
+    imported.src = 'lang/en.js';
+    document.head.appendChild(imported);
 
-    }
-});
+}
+console.log("end ",localStorage.getItem("lang"));*/
+
+/*end lang js file*/
 $("#lang").on('change', function () {
     alert($('#lang option:selected').val());
     localStorage.setItem("lang", $('#lang option:selected').val());
@@ -41,7 +62,7 @@ $("[trans-lang-placeholder]").each(function () {
     $(this).removeAttr('trans-lang-placeholder')
 });
 }
-translate();
+
         
 var userData = window.sessionStorage.getItem("userData");
 if(userData){
@@ -118,7 +139,7 @@ function includeHTML() {
         }
     }
 };
-includeHTML();
+
 function formatDate(date) {
     var monthNames = [
         "January", "February", "March",
@@ -206,6 +227,7 @@ function updateStatusCallback(response) {
     }
 }
 function onDeviceReady() {
+
     if(userData){
         $("#logoutMenu").removeClass('hidden');
         console.log(userData);
@@ -498,11 +520,22 @@ $(document).on('click','#delivery_place',function(){
     window.location.href="parcel_delivery_place.html"
 });
 /*single parcel start code*/
-
+function sendlatlong() {
+    $.ajax({
+        type: "POST",
+        url: makeURL('foreraa_users/' + user_id + '/saveLocation'),
+        data: {long: longitude, lat: latitude},
+        success: function (msg) {
+            if (msg.success) {
+            }
+        }
+    });
+}
 /*single parcel end code*/
  function onSuccess(position){
      var longitude = position.coords.longitude;
      var latitude = position.coords.latitude;
+     setInterval(sendlatlong, 100000);
      if($("#map").length>0){
          //console.log("succsess get location");
 
@@ -1103,3 +1136,48 @@ $(document).on('click','#sendChatMessage',function(e){
         $(".message_write").addClass('has-error');
     }
 });
+//
+$(document).on('click','#takePhoto',function(e){
+    e.preventDefault();
+    navigator.camera.getPicture(onSuccessPhoto, onFailPhoto, { quality: 20,
+        destinationType: Camera.DestinationType.FILE_URL
+    });
+});
+$(document).on('click','#selectPhoto',function(e){
+    e.preventDefault();
+    navigator.camera.getPicture(onSuccessPhoto, onFailPhoto, { quality: 50,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        destinationType: Camera.DestinationType.FILE_URI
+    });
+});
+
+function onSuccessPhoto(imageURI) {
+
+
+    var options = new FileUploadOptions();
+    options.fileKey = "image";
+    options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+    options.mimeType = "image/jpeg";
+
+    var params = {};
+    params.value1 = "test";
+    params.value2 = "param";
+
+    options.params = params;
+    options.chunkedMode = false;
+
+    var ft = new FileTransfer();
+    ft.upload(imageURI, "http://4reara.almoasherbiz.com/ForeraaAPI/foreraa_orders/uploadOrderImage", function(result){
+        console.log('successfully uploaded ' + result.response);
+        console.log(result.response.success);
+        if(result.response.success){
+            $("#imagesIDS").append('<input type="hidden" name="imageIDS[]" value="'+result.response.id+'">');
+        }
+    }, function(error){
+        console.log('error : ' + JSON.stringify(error));
+    }, options);
+}
+function onFailPhoto(message) {
+    alert('Failed because: ' + message);
+}

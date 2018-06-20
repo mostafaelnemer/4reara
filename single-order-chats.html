@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/style.css">
     <!--<link rel="stylesheet" href="css/orange.css">-->
     <link rel="stylesheet" href="css/purple.css">
+    <script type="text/javascript" src="cordova.js"></script>
     <style>
         #custom-search-input {
             background: #e8e6e7 none repeat scroll 0 0;
@@ -260,12 +261,12 @@
             <div class="message_write">
                 <input type="hidden" id="chatOrderID">
                 <input type="hidden" id="chatUserID">
-                <textarea class="form-control" id="chatMessage" placeholder="type a message"></textarea>
+                <textarea class="form-control" id="chatMessage" trans-lang-placeholder="type_message"></textarea>
                 <div class="clearfix"></div>
                 <div class="chat_bottom"><!--<a href="#" class="pull-left upload_btn"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
                     Add Files</a>-->
-                    <a href="#" id="sendChatMessage" class="pull-right btn btn-success">
-                        Send
+                    <a href="#" id="sendChatMessage" class="pull-right btn btn-success"  trans-lang-html="send">
+
                     </a>
                 </div>
             </div>
