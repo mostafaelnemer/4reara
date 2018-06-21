@@ -1,117 +1,121 @@
 <!doctype html>
-<html lang="zxx">
+<html lang="en">
 
-<!-- Mirrored from kiswa.net/themes/star-restaurant/orange-restaurant/forget-password.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Apr 2018 08:31:47 GMT -->
 <head>
-    <title>User Profile</title>
+    <title>Services</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" href="images/favicon.png" type="image/x-icon">
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300italic,800italic,800,700italic,700,600italic,600,400italic,300%7CRoboto+Condensed:400,400i,700,700i%7CGreat+Vibes" rel="stylesheet">
-
     <!-- Bootstrap Stylesheet -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-
     <!-- Font Awesome Stylesheet -->
     <link rel="stylesheet" href="css/fontawesome-all.min.css">
-
     <!-- Custom Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <!--<link rel="stylesheet" href="css/orange.css">-->
     <link rel="stylesheet" href="css/purple.css">
     <script type="text/javascript" src="cordova.js"></script>
+    <style>
+        .visible-xs {
+            display: inline-block !important;
+        }
+        .block {
+            display: block !important;
+            width: 100%;
+            height: 1px !important;
+        }
+        ul.c-controls li {
+            margin-top: 8px;
+            float: left;
+        }
+        ul.c-controls li a {
+            font-size: 1.7em;
+            padding: 11px 10px 6px;
+        }
+        ul.c-controls li a i {
+            min-width: 24px;
+            text-align: center;
+        }
+        ul.c-controls li a:hover {
+            background-color: rgba(51, 51, 51, 0.2);
+        }
+        .c-toggle {
+            font-size: 1.7em;
+        }
+        .name {
+            font-size: 1em;
+            font-weight: 700;
+        }
+        .c-info {
+            padding: 5px 10px;
+            font-size: 1.25em;
+        }
+        .img-responsive{
+            max-width: 50% !important;
+        }
+    </style>
 </head>
-
 <body class="page-body">
-
 <!--====== LOADER =====-->
 <div class="loader"></div>
-
-
 <!--============ SIDE-NAV =============-->
 <div w3-include-html="include/side_nav.html" class="sidenav-content"></div>
 <!-- end sidenav-content -->
-
-
 <!--=============== FULLSCR-NAV ==============-->
 <div w3-include-html="include/fullscr_nav.html" id="fullscr-nav" class="fullscr-navigation"></div>
 <!-- end fullscr-nav -->
-
-
 <!--================ SHOPPING-CART ==============-->
 <div w3-include-html="include/shopping_cart.html" id="shopping-cart-sidebar" class="shc-sidebar"></div>
 <!-- shopping-cart-sidebar -->
-
-
 <!--============== USER-PROFILE-SIDEBAR =============-->
 <div w3-include-html="include/user_profile_sidebar.html" id="user-profile-sidebar" class="user-prf-sidebar"></div>
 <!-- end user-profile-sidebar -->
-
-
 <div class="canvas">
-
     <div class="overlay-black"></div>
-
     <!--========= HEADER =========-->
     <div w3-include-html="include/header.html" class="header"></div>
     <!-- end header -->
-
-
     <!--========= PAGE-COVER =========-->
     <div class="page-cover">
         <div class="container-fluid">
-            <h3><span class="cover-left-icon pull-left"><i class="fa fa-question"></i></span>User Profile<span class="cover-right-icon pull-right"><i class="fa fa-question"></i></span></h3>
+            <h3  trans-lang-html="delegate_ratings"><span class="cover-left-icon pull-left"><i class="fa fa-th-large"></i></span><span class="cover-right-icon pull-right"><i class="fa fa-th-large"></i></span></h3>
+
         </div><!-- end container-fluid -->
     </div><!-- end page-cover -->
-
-
     <!--=================== PAGE-WRAPPER ================-->
     <section class="page-wrapper innerpage-section-padding">
-        <div id="user-profile-page" >
-            <div class="container-fluid  text-center " id="my_account"></div><!-- end container-fluid -->
-        </div><!-- end user-profile-page -->
-    </section>
+        <div id="register-page">
+            <div class="container-fluid text-center">
+                <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+                    <div class="panel panel-default" id="delegate_ratings">
 
-    <!-- end page-wrapper -->
+                        <!--<ul class="list-group" id="my_orders">
 
+                        </ul>-->
+                    </div>
+                </div>
+            </div>
 
+        </div>
+
+    </section><!-- end page-wrapper -->
     <!--=============== FOOTER ===============-->
-    <!--<section id="footer" class="section-padding">
-        <div class="container-fluid text-center">
-            <h3><span><i class="far fa-star"></i>Res</span>taurant</h3>
-            <ul class="footer-contact list-unstyled">
-                <li><span><i class="fa fa-map-marker-alt"></i></span>Street # 3, Lorem ipsum dolor , California. </li>
-                <li><span><i class="fa fa-envelope"></i></span>info@starrestaurant.com</li>
-                <li><span><i class="fa fa-phone"></i></span>+123 1234 123456</li>
-            </ul>
-
-            <ul class="footer-social list-unstyled list-inline">
-                <li><a href="#"><span><i class="fab fa-facebook-f"></i></span></a></li>
-                <li><a href="#"><span><i class="fab fa-instagram"></i></span></a></li>
-                <li><a href="#"><span><i class="fab fa-pinterest"></i></span></a></li>
-                <li><a href="#"><span><i class="fab fa-twitter"></i></span></a></li>
-                <li><a href="#"><span><i class="fab fa-dribbble"></i></span></a></li>
-            </ul>
-            <p class="copyright">© 2018 <a href="#"><span><i class="far fa-star"></i></span>Restaurant</a>. All rights reserved.</p>
-        </div>&lt;!&ndash; end container-fluid &ndash;&gt;
-    </section>--><!-- end footer -->
-
+    <!--<section w3-include-html="include/footer.html" id="footer" class="section-padding"></section>-->
+    <!-- end footer -->
 </div><!-- end canvas -->
-
-
 <!-- Page Scripts Starts -->
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/custom-navigation.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo"></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places" async defer></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places"> </script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/index.js"></script>
-<script src="js/my_account.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="js/delegate_ratings.js"></script>
 <!-- Page Scripts Ends -->
-
 </body>
 
-<!-- Mirrored from kiswa.net/themes/star-restaurant/orange-restaurant/forget-password.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Apr 2018 08:31:47 GMT -->
 </html>

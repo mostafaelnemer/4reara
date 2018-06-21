@@ -79,5 +79,17 @@
   "duration_required.":"المدة مطلوبة",
   "cost_required.":"التكلفة مطلوبة",
   "failed_you_have_another_order.":"لديك طلب آخر",
+  "create_invoice":"اضافة فتوره",
+  "delegate_ratings":"التقيمات",
+  "my_account":"حسابى",
+  "edit_profile":"تعديل الحساب",
+  "phone":"رقم الهاتف",
+  "facebook_link":"فيس بوك",
+  "google_link":"جووجل",
+  "instgram_link":"انستجرام",
+  "linkedin_link":"لينكدان",
+  "twitter_link":"تويتر",
+  "youtube_link":"يوتيوب",
+  "update":"تحديث",
   "login_now":"تسجل الدخول"
 }

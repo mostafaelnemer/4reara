@@ -70,7 +70,9 @@ $("[trans-lang-placeholder]").each(function () {
 
         
 var userData = window.sessionStorage.getItem("userData");
+console.log(userData);
 if(userData){
+
     userData=JSON.parse(userData);
     user_id=userData.id
     $("#user_id,.user_id").val(user_id);
@@ -220,6 +222,9 @@ function onDeviceReady() {
                 $("#logoutMenu").removeClass('hidden');
                 $("#userImage").attr('src',userData.image);
                 $("#userName").html(userData.name);
+                if(userData.type=='customer'){
+                    $("#delegateRatings").removeClass('hidden')
+                }
                 clearInterval(changeData);
             }
         },300)
@@ -1250,22 +1255,17 @@ $(document).on('click','#selectPhoto',function(e){
 });
 
 function onSuccessPhoto(imageURI) {
-
-
     var options = new FileUploadOptions();
     options.fileKey = "image";
     options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
     options.mimeType = "image/jpeg";
-
     var params = {};
     params.value1 = "test";
     params.value2 = "param";
-
     options.params = params;
     options.chunkedMode = false;
-
     var ft = new FileTransfer();
-    ft.upload(imageURI, "http://4reara.almoasherbiz.com/ForeraaAPI/foreraa_orders/uploadOrderImage", function(result){
+    ft.upload(imageURI, APIURL+"foreraa_orders/uploadOrderImage", function(result){
         console.log('successfully uploaded ' + result.response);
         responseData=JSON.parse(result.response);
         console.log(responseData.success);
@@ -1281,3 +1281,35 @@ function onSuccessPhoto(imageURI) {
 function onFailPhoto(message) {
     alert('Failed because: ' + message);
 }
+$(document).on('click','#uploadInvoice',function(e){
+    e.preventDefault();
+    el=$(this);
+    order_id=el.data('id');
+    delegate_id=el.attr('data-delegate-id');
+    navigator.camera.getPicture(function(imageURI){
+        var options = new FileUploadOptions();
+        options.fileKey = "image";
+        options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+        options.mimeType = "image/jpeg";
+        var params = {};
+        params.order_id = order_id;
+        params.delegate_id = delegate_id;
+        options.params = params;
+        options.chunkedMode = false;
+        var ft = new FileTransfer();
+        ft.upload(imageURI, APIURL+"foreraa_orders/uploadInvoice", function(result){
+            console.log('successfully uploaded ' + result.response);
+            responseData=JSON.parse(result.response);
+            console.log(responseData.success);
+            if(responseData.success){
+                el.remove();
+            }
+        }, function(error){
+            console.log('error : ' + JSON.stringify(error));
+        }, options);
+    }, onFailPhoto, { quality: 50,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        destinationType: Camera.DestinationType.FILE_URI
+    });
+});

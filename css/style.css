@@ -2071,3 +2071,31 @@ a:hover{
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+/* starts */
+.stars-outer {
+	display: inline-block;
+	position: relative;
+	font-family: FontAwesome;
+}
+
+.stars-outer::before {
+	content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 0;
+}
+
+.stars-inner::before {
+	content: "\f005 \f005 \f005 \f005 \f005";
+	color: #6d2e6a;
+}
+.order-panel .panel-heading .order-title .order-status1{
+	font-size:16px;
+	text-align:center;
+}

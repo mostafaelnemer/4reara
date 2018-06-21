@@ -41,10 +41,14 @@ if(orderData){
             delegateHtml+='<div class="col-lg-12"><button class="cancelOrder btn btn-info btn-block" data-id="'+orderData.id+'">'+strings['cancel']+'</button></div>'
         }
     }else{
-        delegateHtml+='<div class="clearfix"></div><div class="customer-section"><div class="col-xs-3"><img style="width: 100%" src="'+((orderData.user_img_dir&&orderData.user_img)?SITEURL+orderData.user_img_dir+orderData.user_img:SITEURL+'img/Users/default_image.png')+'" class="img-circle" alt=""></div>';
+
+        delegateHtml+='<div class="hr-border"></div><div class="clearfix"></div><div class="customer-section"><div class="col-xs-3"><img style="width: 100%" src="'+((orderData.user_img_dir&&orderData.user_img)?SITEURL+orderData.user_img_dir+orderData.user_img:SITEURL+'img/Users/default_image.png')+'" class="img-circle" alt=""></div>';
         delegateHtml+='<div class="col-xs-9"><a href="#" data-order-id="'+orderData.id+'" class="pull-right chat-now"><i class="fa fa-commenting"></i></a><a class="pull-right call-now" href="tel:'+orderData.user_phone+'"><i class="fa fa-phone"></i></a> <h4>'+orderData.user_name+'</h4></div><div class="clearfix"></div></div>';
         if(orderData.statues=='new'){
             delegateHtml+='<div class="col-lg-12"><button class="confirmOrder btn btn-info btn-block" data-id="'+orderData.id+'">'+strings['confirm']+'</button></div>'
+        }
+        if(orderData.statues=='inprogress'){
+            delegateHtml+='<div class="col-lg-12"><button id="uploadInvoice" class=" btn btn-info btn-block" data-delegate-id="'+userData.id+'" data-id="'+orderData.id+'">'+strings['create_invoice']+'</button></div>'
         }
     }
     delegateHtml+='<div class="clearfix"></div>';
