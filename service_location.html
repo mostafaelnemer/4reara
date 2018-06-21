@@ -67,7 +67,7 @@
                 </div>
                 <div class="form-group col-xs-12">
                     <label for="order_details" trans-lang-html="order_details"></label>
-                    <textarea name="details" class="form-control" id="order_details" cols="30" rows="10"></textarea>
+                    <textarea name="details" class="form-control" id="order_details" trans-lang-placeholder="write_details" cols="30" rows="10"></textarea>
                     <input type="hidden" name="user_id" id="user_id">
                     <input type="hidden" name="duration" data-element="#duration" id="durationInput">
                     <input type="hidden" name="distance" data-element="#distance" id="distanceInput">
@@ -92,10 +92,11 @@
                     <p data-cost="250" id="cost" class="form-control">250 $</p>
                 </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary" id='takePhoto'>Take photo</button>
-                    <button type="button" class="btn btn-success" id='selectPhoto'>Select photo from Gallery</button>
+                    <button type="button" class="btn btn-primary" trans-lang-html="take_photo" id='takePhoto'></button>
+                    <button type="button" class="btn btn-success" trans-lang-html="select_photo_from_gallery" id='selectPhoto'></button>
                 </div>
                 <div id="imagesIDS"></div>
+                <div id="imagesSelected" class="text-center" style="padding: 10px" trans-lang-html="no_image_selected"></div>
                 <div class="clearfix"></div>
                 <div class="clearfix" style="height: 20px;"></div>
                 <div class="col-xs-12">

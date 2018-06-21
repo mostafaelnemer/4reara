@@ -2050,6 +2050,7 @@ a:hover{
 }
 #getMyLocation span,#getAllServices span,#getAllOrders span{
 	display: none;
+	font-size: 10pt;
 }
 .call-now,.chat-now{
 	font-size: 20px;
@@ -2060,4 +2061,13 @@ a:hover{
 }
 .page-cover{
 	display: none;
+}
+.hr-border{
+	background: white;
+	height: 2px;
+	margin-bottom: 15px;
+}
+.delegate-section,.customer-section{
+	margin-top: 10px;
+	margin-bottom: 10px;
 }

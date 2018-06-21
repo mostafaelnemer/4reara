@@ -17,30 +17,38 @@ if(orderData){
     $("#duration").html(orderData.duration)
     $("#cost").html(orderData.cost);
     delegateHtml='';
+    delegateHtml+='<div class="clearfix"></div>';
+    delegateHtml+='<div class="clearfix"></div>';
     console.log(orderData.statues);
     console.log(userData);
     if(userData.type=='customer'){
         if(orderData.delegate_id){
-            delegateHtml+='<div class="col-xs-3"><a href="#" class="single-delegate" data-id="'+orderData.delegate_id+'"><img style="width: 100%" src="'+((orderData.img_dir&&orderData.img)?SITEURL+orderData.img_dir+orderData.img:SITEURL+'img/Users/default_image.png')+'" class="img-circle" alt=""></a></div> <div class="col-xs-9"><a href="#" data-order-id="'+orderData.id+'" class="pull-right chat-now"><i class="fa fa-commenting"></i></a><a class="pull-right call-now" href="tel:'+orderData.delegate_phone+'"><i class="fa fa-phone"></i></a> <a href="#" class="single-delegate" data-id="'+orderData.delegate_id+'"><h4>'+orderData.delegate_name+'</h4></a> <ul class="list-unstyled list-inline star-rating"> ';
+            delegateHtml+='<div class="hr-border"></div><div class="clearfix"></div><div class="delegate-section"><div class="col-xs-3"><a href="#" class="single-delegate" data-id="'+orderData.delegate_id+'"><img style="width: 100%" src="'+((orderData.delegate_img_dir&&orderData.delegate_img)?SITEURL+orderData.delegate_img_dir+orderData.delegate_img:SITEURL+'img/Users/default_image.png')+'" class="img-circle" alt=""></a></div> <div class="col-xs-9"><a href="#" data-order-id="'+orderData.id+'" class="pull-right chat-now"><i class="fa fa-commenting"></i></a><a class="pull-right call-now" href="tel:'+orderData.delegate_phone+'"><i class="fa fa-phone"></i></a> <a href="#" class="single-delegate" data-id="'+orderData.delegate_id+'"><h4>'+orderData.delegate_name+'</h4></a> <ul class="list-unstyled list-inline star-rating"> ';
             for(x=1;x<=orderData.delegate_rating;x++){
                 delegateHtml+='<li><span><i class="fa fa-star"></i></span></li>';
             }
             for(y=x;y<=5;y++){
                 delegateHtml+='<li><span><i class="fa fa-star-o"></i></span></li>';
             }
-            delegateHtml+='</ul> <a href="#" class="single-delegate" data-id="'+orderData.delegate_id+'">'+view+'</a> </div>';
+            delegateHtml+='</ul> <a href="#" class="single-delegate" data-id="'+orderData.delegate_id+'">'+view+'</a> </div><div class="clearfix"></div></div>';
         }else{
             delegateHtml='<div class="clearfix"></div><div class="alert alert-info"><i class="fa fa-times-circle"></i> No Delegate</div>';
         }
         if(orderData.has_rating==0&&orderData.statues=='closed'){
-            delegateHtml+='<div class="clearfix"></div><div class="clearfix" style="height: 10px;"></div><div class="col-md-12"><form id="ratingForm" action="" method="post"><div id="ratingForm-response"></div> <input type="hidden" name="delegate_id" value="'+orderData.delegate_id+'"> <input type="hidden" id="order_id" name="order_id" value="'+orderData.id+'"> <input id="ratings-hidden" name="rating" type="hidden"> <div class="form-group"><textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea></div>  <div class="text-right"> <div class="stars starrr" data-rating="0"></div> <button class="btn btn-success btn-lg" type="submit">Save</button></div></form></div>';
+            delegateHtml+='<div class="clearfix"></div><div class="clearfix" style="height: 10px;"></div><div class="col-md-12"><form id="ratingForm" action="" method="post"><div id="ratingForm-response"></div> <input type="hidden" name="user_id" value="'+userData.id+'"> <input type="hidden" name="delegate_id" value="'+orderData.delegate_id+'"> <input type="hidden" id="order_id" name="order_id" value="'+orderData.id+'"> <input id="ratings-hidden" name="rating" type="hidden"> <div class="form-group"><textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea></div>  <div class="text-right"> <div class="stars starrr" data-rating="0"></div> <button class="btn btn-success btn-lg" type="submit">Save</button></div></form></div>';
+        }
+        if((userData.id==orderData.user_id||(orderData.delegate_id&&orderData.delegate_id==userData.id))&&$.inArray(orderData.statues,['cancel'])!=-1){
+            delegateHtml+='<div class="col-lg-12"><button class="cancelOrder btn btn-info btn-block" data-id="'+orderData.id+'">'+strings['cancel']+'</button></div>'
         }
     }else{
+        delegateHtml+='<div class="clearfix"></div><div class="customer-section"><div class="col-xs-3"><img style="width: 100%" src="'+((orderData.user_img_dir&&orderData.user_img)?SITEURL+orderData.user_img_dir+orderData.user_img:SITEURL+'img/Users/default_image.png')+'" class="img-circle" alt=""></div>';
+        delegateHtml+='<div class="col-xs-9"><a href="#" data-order-id="'+orderData.id+'" class="pull-right chat-now"><i class="fa fa-commenting"></i></a><a class="pull-right call-now" href="tel:'+orderData.user_phone+'"><i class="fa fa-phone"></i></a> <h4>'+orderData.user_name+'</h4></div><div class="clearfix"></div></div>';
         if(orderData.statues=='new'){
-            delegateHtml+='<div class="col-lg-12"><button class="confirmOrder btn btn-info btn-block" data-id="'+orderData.id+'">Confirm</button></div>'
+            delegateHtml+='<div class="col-lg-12"><button class="confirmOrder btn btn-info btn-block" data-id="'+orderData.id+'">'+strings['confirm']+'</button></div>'
         }
     }
-
+    delegateHtml+='<div class="clearfix"></div>';
+    delegateHtml+='<div class="clearfix"></div>';
     $("#delegate-content").html(delegateHtml);
     if(orderData.has_rating==0&&orderData.statues=='closed'){
         var ratingForm = $("#ratingForm").validate({
@@ -125,7 +133,16 @@ if(orderData){
                 });
             }
         }*/
-
+       /* var geocoder = new google.maps.Geocoder();
+        var latlng = {lat: lastLatitude, lng: lastLongitude};
+        geocoder.geocode({'location': latlng}, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                address=results[0].formatted_address;
+                console.log(address);
+            }else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });*/
         directionsService.route({
             origin: orderData.place_of_delivery_address,
             destination: orderData.delivery_place_address,
@@ -134,6 +151,7 @@ if(orderData){
             travelMode: 'DRIVING',
         }, function(response, status) {
             if (status === 'OK') {
+                console.log(response)
                 directionsDisplay.setDirections(response);
                 var route = response.routes[0];
                console.log(route);

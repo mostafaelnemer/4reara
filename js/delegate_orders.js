@@ -1,10 +1,12 @@
 var userData=window.sessionStorage.getItem('userData');
+var lastLongitude=window.sessionStorage.getItem('lastLongitude');
+var lastLatitude=window.sessionStorage.getItem('lastLatitude');
 if(userData){
     userData=JSON.parse(userData);
     user_id=userData.id;
     $.ajax({
         type: "GET",
-        url: makeURL('foreraa_orders?statues=new&delegate_id=null'),
+        url: makeURL('foreraa_orders?statues=new&delegate_id=null&longitude='+lastLongitude+'&latitude='+lastLatitude),
         success: function (msg) {
             //getMessages(msg,"#response")
             $(".loader").hide();

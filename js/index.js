@@ -8,12 +8,17 @@ window.sessionStorage.clear();//Clear storage
 //  window.sessionStorage.clear();\
 /*start lang js file*/
 var selectedLang=(localStorage.getItem("lang")=='ar'||localStorage.getItem("lang")=='en')?localStorage.getItem("lang"):'en';
-console.log(selectedLang)
+if(selectedLang=='ar'){
+    $('head').append('<link rel="stylesheet" href="css/rtl.css" type="text/css" />');
+}
+window.strings = (localStorage.getItem("strings"))?JSON.parse(localStorage.getItem("strings")):null;
+var strings = (localStorage.getItem("strings"))?JSON.parse(localStorage.getItem("strings")):null;
 $.getJSON('lang/'+selectedLang+'.json')
     .done(function (data) {
         window.strings = data;
         var strings = data;
         console.log(data);
+        localStorage.setItem('strings',JSON.stringify(strings));
         includeHTML();
         translate();
 
@@ -66,34 +71,15 @@ $("[trans-lang-placeholder]").each(function () {
         
 var userData = window.sessionStorage.getItem("userData");
 if(userData){
-
     userData=JSON.parse(userData);
     user_id=userData.id
     $("#user_id,.user_id").val(user_id);
+
 }
-$(".innerpage-section-padding").css({"min-height":$(window).height()-60})
+$(".innerpage-section-padding").css({"min-height":$(window).height()+50})
 //console.log(userData);
 url = window.location.pathname;
 var filename = url.substring(url.lastIndexOf('/')+1);
-
-var errorMessages={
-    "email_exist":"The Email Is Already Exist",
-    "phone_exist":"The Phone Is Already Exist",
-    "success":"Your Operation is success",
-    "wrong_phone_or_password":"Wrong Phone Or Password",
-    "user_not_active":"This User Not Active ",
-    "user_id_required.":"User ID is required",
-    "place_of_delivery_address_required.":"Place Of Delivery Address is required",
-    "place_of_delivery_latitude_required.":"Place Of Delivery latitude is required",
-    "place_of_delivery_longitude_required.":"Place Of Delivery longitude is required",
-    "delivery_place_address_required.":"Delivery Place Address is required",
-    "delivery_place_latitude_required.":"Delivery Place latitude is required",
-    "delivery_place_longitude_required.":"Delivery Place longitude is required",
-    "details_required.":"Details is required",
-    "distance_required.":"Distance is required",
-    "duration_required.":"Duration is required",
-    "cost_required.":"Cost is required",
-};
 function get(name){
     if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
         return decodeURIComponent(name[1]);
@@ -199,14 +185,14 @@ function getMessages(response,element){
     html='<div class="alert '+((response.success)?'alert-success':'alert-danger')+'">';
     message=response.message;
     if(message.length==1){
-        html+=((typeof errorMessages[message[0]]=='undefined')?message[0]:errorMessages[message[0]])+'</div>';
+        html+=((typeof strings[message[0]]=='undefined')?message[0]:strings[message[0]])+'</div>';
         $(element).html(html);
         return'';
     }
     html+='<ul>';
     if(Array.isArray(message)){
        message.forEach(function(item){
-          html+='<li>'+((typeof errorMessages[item]=='undefined')?item:errorMessages[item])+'</li>'
+          html+='<li>'+((typeof strings[item]=='undefined')?item:strings[item])+'</li>'
        })
     }
     html+='</ul></div>';
@@ -229,8 +215,14 @@ function updateStatusCallback(response) {
 function onDeviceReady() {
 
     if(userData){
-        $("#logoutMenu").removeClass('hidden');
-        console.log(userData);
+        changeData=setInterval(function(){
+            if($("#userImage").length){
+                $("#logoutMenu").removeClass('hidden');
+                $("#userImage").attr('src',userData.image);
+                $("#userName").html(userData.name);
+                clearInterval(changeData);
+            }
+        },300)
         if(userData.type=='customer'){
             $("#getAllServices").removeClass('hidden');
         }else{
@@ -390,6 +382,75 @@ function onDeviceReady() {
             }
         });
     });*/
+    var registerValidator = $("#register-form").validate({
+        errorPlacement: function(error, element) {
+            // Append error within linked label
+            /*$( element )
+                .closest( "form" )
+                .find( "label[for='" + element.attr( "id" ) + "']" )
+                .append( error );*/
+            //$(element).parent().parent().addClass('has-error');
+
+        },
+        highlight: function(element) {
+
+            $(element).closest('.form-group').addClass('has-error');
+
+        },
+        unhighlight: function(element) {
+
+            $(element).closest('.form-group').removeClass('has-error');
+
+        },
+        errorElement: "span",
+        rules : {
+
+            name : {
+                required:true,
+                minlength : 5
+            },
+            email : {
+                required:true,
+                minlength : 5
+            },
+            phone : {
+                required:true,
+                minlength : 5
+            },
+            password : {
+                required:true,
+                minlength : 5
+            },
+            confirm_password : {
+                required:true,
+                minlength : 5,
+                equalTo:"#password"
+            }
+        },
+        messages: {
+        },
+        submitHandler: function() {
+            //alert('start');
+            //$("#charge-btn").attr("disabled", true);
+            $(".loader").show();
+            $.ajax({
+                type: "POST",
+                url: makeURL('foreraa_users'),
+                data: $("#register-form").serialize(),
+                success: function (msg) {
+                    getMessages(msg,"#response");
+                    if(msg.success){
+                        $("#register-form #social").val('no');
+                        $("#register-form")[0].reset();
+                    }
+                    $(".loader").hide();
+                }
+            });
+        }
+    });
+    $(".cancel").click(function() {
+        registerValidator.resetForm();
+    });
     var loginValidator = $("#login-form").validate({
         errorPlacement: function(error, element) {
             // Append error within linked label
@@ -520,11 +581,16 @@ $(document).on('click','#delivery_place',function(){
     window.location.href="parcel_delivery_place.html"
 });
 /*single parcel start code*/
-function sendlatlong() {
+function saveLocationSession(lastLongitude,lastLatitude){
+    window.sessionStorage.setItem("lastLongitude", lastLongitude);
+    window.sessionStorage.setItem("lastLatitude", lastLatitude);
+}
+function sendlatlong(lastLongitude,lastLatitude) {
+    saveLocationSession(lastLongitude,lastLatitude);
     $.ajax({
         type: "POST",
         url: makeURL('foreraa_users/' + user_id + '/saveLocation'),
-        data: {long: longitude, lat: latitude},
+        data: {"lastLongitude": lastLongitude, "lastLatitude": lastLatitude},
         success: function (msg) {
             if (msg.success) {
             }
@@ -535,7 +601,11 @@ function sendlatlong() {
  function onSuccess(position){
      var longitude = position.coords.longitude;
      var latitude = position.coords.latitude;
-     setInterval(sendlatlong, 100000);
+     sendlatlong(longitude,latitude);
+     setInterval(function(){
+         console.log('send location')
+         sendlatlong(longitude,latitude)
+     }, 100000);
      if($("#map").length>0){
          //console.log("succsess get location");
 
@@ -1050,6 +1120,29 @@ $(document).on('click','.confirmOrder',function(e){
             success: function (msg) {
                 if(msg.success){
                    el.remove();
+                }else{
+                    getMessages(msg,"#response")
+                }
+
+            }
+        });
+    }
+});
+$(document).on('click','.cancelOrder',function(e){
+    e.preventDefault();
+    console.log('cancelOrder');
+    el=$(this);
+    order_id=$(this).data('id');
+    user_id=userData.id;
+    console.log(userData)
+    if(user_id){
+        $.ajax({
+            type: "POST",
+            url: makeURL('foreraa_users/'+user_id+'/cancelOrder'),
+            data:{"order_id":order_id},
+            success: function (msg) {
+                if(msg.success){
+                    el.remove();
                 }
 
             }
@@ -1097,6 +1190,10 @@ function getChatData(orderData,userData){
             console.log(msg);
             if(msg.success){
                 html='';
+                if(userData.type=='customer'){
+                    html+='<li class="right clearfix "> <span class="chat-img1 pull-left"> <img src="img/logoo.png" alt="forera" class="img-circle"> </span> <div class="chat-body1 clearfix"><p>'+strings['chat']+'</p>  </div> </li>';
+                }
+
                 if(msg.result.length){
                     msg.result.forEach(function (item) {
                         html+='<li class="left clearfix '+((userData.id==item.user_id)?'admin_chat':'')+'"> <span class="chat-img1 '+((userData.id==item.user_id)?'pull-right':'pull-left')+'"> <img src="'+item.image+'" alt="'+item.user_name+'" class="img-circle"> </span> <div class="chat-body1 clearfix"><p><!--<span class="username label '+((userData.id==item.user_id)?'label-info':'label-success')+'">'+item.user_name+'</span>--> '+item.message+'</p> <div class="chat_time '+((userData.id==item.user_id)?'pull-left':'pull-right')+'">'+formatDate(new Date(item.add_date))+' '+formatTime(new Date(item.add_date))+'</div> </div> </li>';
@@ -1170,9 +1267,12 @@ function onSuccessPhoto(imageURI) {
     var ft = new FileTransfer();
     ft.upload(imageURI, "http://4reara.almoasherbiz.com/ForeraaAPI/foreraa_orders/uploadOrderImage", function(result){
         console.log('successfully uploaded ' + result.response);
-        console.log(result.response.success);
-        if(result.response.success){
-            $("#imagesIDS").append('<input type="hidden" name="imageIDS[]" value="'+result.response.id+'">');
+        responseData=JSON.parse(result.response);
+        console.log(responseData.success);
+        if(responseData.success){
+            $("#imagesIDS").append('<input type="hidden" name="imageIDS[]" value="'+responseData.image_id+'">');
+            imagesNumbers=$("#imagesIDS [name='imageIDS[]']").length;
+            $("#imagesSelected").html(imagesNumbers+strings['images_selected'])
         }
     }, function(error){
         console.log('error : ' + JSON.stringify(error));

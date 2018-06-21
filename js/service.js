@@ -67,7 +67,7 @@ function serviceSearchOnGoogleMap(serviceData) {
             language:lang,
             rankby:'distance',
         }, function(response,request){
-            console.log(lang)
+           /* console.log(lang)
             console.log(serviceData.google_key)
             console.log(response);
             console.log(request);
@@ -76,7 +76,7 @@ function serviceSearchOnGoogleMap(serviceData) {
             console.log(response[1].geometry.location.lat());
             console.log(response[1].geometry.location.lng());
             console.log(response[2].geometry.location.lat());
-            console.log(response[2].geometry.location.lng());
+            console.log(response[2].geometry.location.lng());*/
             destinationA=new google.maps.LatLng(userDataLatitude,userDataLongitude);
             otherDestinations=[];
             response.forEach(function (item) {
@@ -98,7 +98,7 @@ function serviceSearchOnGoogleMap(serviceData) {
                 x=0;
                 response.forEach(function(item){
                     console.log(otherDestinations[x]);
-                    html+='<li class="list-group-item"><a href="javascript:void(0)" class="single-location" data-longitude="'+otherDestinations[x].lng()+'" data-latitude="'+otherDestinations[x].lat()+'" data-address="'+item.vicinity+'" > <div class="col-xs-3 col-sm-3"> <img src="'+item.icon+'" alt="'+item.name+'" class="img-responsive img-circle" /> </div> <div class="col-xs-9 col-sm-9"> <span class="name">'+item.name+'</span> <div class="clearfix"></div> <span class="visible-xs"> <span class="text-muted">'+item.vicinity+'</span></span> <div class="clearfix"></div><span class="visible-xs"> <span class="text-muted">'+matrixResponse.rows[0].elements[x].distance.text+' - '+matrixResponse.rows[0].elements[x].duration.text+'</span></span> <span class="pull-right">'+((typeof item.rating!='undefined')?item.rating:'')+'</span>  </div> <div class="clearfix"></div> </a></li>';
+                    html+='<li class="list-group-item"><a href="javascript:void(0)" class="single-location" data-longitude="'+otherDestinations[x].lng()+'" data-latitude="'+otherDestinations[x].lat()+'" data-address="'+item.vicinity+'" > <div class="col-xs-2 col-sm-2"> <img src="'+item.icon+'" alt="'+item.name+'" style="max-width: 100%" class="img-responsive img-circle" /> </div> <div class="col-xs-10 col-sm-10"> <span class="name">'+item.name+'</span> <div class="clearfix"></div> <span class="visible-xs"> <span class="text-muted">'+item.vicinity+'</span></span> <div class="clearfix"></div><span class="visible-xs"> <span class="text-muted">'+matrixResponse.rows[0].elements[x].distance.text+' - '+matrixResponse.rows[0].elements[x].duration.text+'</span></span> <span class="pull-right">'+((typeof item.rating!='undefined')?item.rating:'')+'</span>  </div> <div class="clearfix"></div> </a></li>';
                     x++;
                 });
                 $("#services-list").html(html)
