@@ -49,6 +49,9 @@ Author:			StarRestaurant
 	height: 100%;
 	z-index: 9999;
 }
+*{
+	font-weight: normal !important;
+}
 
 html,body{
 	height:100%;
@@ -2093,7 +2096,7 @@ a:hover{
 
 .stars-inner::before {
 	content: "\f005 \f005 \f005 \f005 \f005";
-	color: #6d2e6a;
+	color: #fad502;
 }
 .order-panel .panel-heading .order-title .order-status1{
 	font-size:16px;

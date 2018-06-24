@@ -86,10 +86,14 @@
     "phone":"Phone",
     "facebook_link":"Facebook Link",
     "google_link":"Google Link",
-    "instgram_link":"Instgram Link",
+    "instagram_link":"Instgram Link",
     "linkedin_link":"Linkedin Link",
     "twitter_link":"Twitter Link",
     "youtube_link":"Youtube Link",
     "update":"Update",
-    "login_now":"Login Now"
+    "login_now":"Login Now",
+    "term_condition":"Term & condition",
+    "user_profile":"User Profile",
+    "upload_image":"Upload Image",
+    "trans_language":"العربية"
 }

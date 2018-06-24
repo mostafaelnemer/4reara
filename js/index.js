@@ -55,8 +55,22 @@ $("#lang").on('change', function () {
     location.reload();
 
 });
+
+$(document).on('click','#lang', function () {
+
+
+    var lang= localStorage.getItem('lang');
+    //alert(lang);
+    if (lang=='ar'){lang='en';}else{lang='ar';}
+    //alert(lang);
+    localStorage.setItem("lang", lang);
+    //alert("feeeettt  " + localStorage.getItem("lang"));
+    location.reload();
+
+});
 function translate(){
 $("[trans-lang-html]").each(function () {
+    console.log($(this).attr('trans-lang-html'));
     console.log(strings[$(this).attr('trans-lang-html')]);
     $(this).html(strings[$(this).attr('trans-lang-html')]);
     $(this).removeAttr('trans-lang-html')
@@ -240,7 +254,6 @@ function onDeviceReady() {
 
    // console.log("start get location ");
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
-
 //    cordova.plugins.locationAccuracy.canRequest(function(canRequest){
 //        if(canRequest){
 //            cordova.plugins.locationAccuracy.request(function (success){
@@ -1019,6 +1032,68 @@ var serviceOrderValidator = $("#service-order-form").validate({
             success: function (msg) {
                 getMessages(msg,"#response")
                 if(msg.success){
+                    $("#service-order-form").hide();
+                    setTimeout(function(){
+                        window.location.href="service.html";
+                    },4000)
+                }
+                $(".loader").hide();
+            }
+
+        });
+    }
+});
+
+
+var editProfileValidator = $("#edit-profile").validate({
+    errorPlacement: function(error, element) {
+        // Append error within linked label
+        /*$( element )
+            .closest( "form" )
+            .find( "label[for='" + element.attr( "id" ) + "']" )
+            .append( error );*/
+        //$(element).parent().parent().addClass('has-error');
+
+    },
+    highlight: function(element) {
+        //console.log("highlight:");
+        //console.log(element);
+        $($(element).data("element")).closest('.form-group').addClass('has-error');
+    },
+    unhighlight: function(element) {
+        //console.log("unhighlight:");
+        //console.log(element);
+        $(element).closest('.form-group').removeClass('has-error');
+    },
+    errorElement: "span",
+    rules : {
+
+        name : {
+            required:true,
+            minlength : 5
+        },
+        email : {
+            required:true,
+            minlength : 5
+        },
+        phone : {
+            required:true,
+            minlength : 5
+        },
+    },
+    messages: {
+    },
+    submitHandler: function() {
+        //alert('start');
+        //$("#charge-btn").attr("disabled", true);
+        $(".loader").show();
+        $.ajax({
+            type: "PUT",
+            url: makeURL('foreraa_users/'+userData.id),
+            data:$("#edit-profile").serialize(),
+            success: function (msg) {
+                getMessages(msg,"#response")
+                if(msg.success){
 
                 }
                 $(".loader").hide();
@@ -1255,6 +1330,7 @@ $(document).on('click','#selectPhoto',function(e){
 });
 
 function onSuccessPhoto(imageURI) {
+    $(".loader").show();
     var options = new FileUploadOptions();
     options.fileKey = "image";
     options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
@@ -1273,6 +1349,7 @@ function onSuccessPhoto(imageURI) {
             $("#imagesIDS").append('<input type="hidden" name="imageIDS[]" value="'+responseData.image_id+'">');
             imagesNumbers=$("#imagesIDS [name='imageIDS[]']").length;
             $("#imagesSelected").html(imagesNumbers+strings['images_selected'])
+            $(".loader").hide();
         }
     }, function(error){
         console.log('error : ' + JSON.stringify(error));
@@ -1287,6 +1364,7 @@ $(document).on('click','#uploadInvoice',function(e){
     order_id=el.data('id');
     delegate_id=el.attr('data-delegate-id');
     navigator.camera.getPicture(function(imageURI){
+        $(".loader").show();
         var options = new FileUploadOptions();
         options.fileKey = "image";
         options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
@@ -1303,6 +1381,7 @@ $(document).on('click','#uploadInvoice',function(e){
             console.log(responseData.success);
             if(responseData.success){
                 el.remove();
+                $(".loader").hide();
             }
         }, function(error){
             console.log('error : ' + JSON.stringify(error));
@@ -1313,3 +1392,34 @@ $(document).on('click','#uploadInvoice',function(e){
         destinationType: Camera.DestinationType.FILE_URI
     });
 });
+$(document).on('click','#profileImageInput',function(e){
+    e.preventDefault();
+    navigator.camera.getPicture(function(imageURI){
+        $(".loader").show();
+        var options = new FileUploadOptions();
+        options.fileKey = "image";
+        options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+        options.mimeType = "image/jpeg";
+        var params = {};
+        params.user_id = userData.id;
+        options.params = params;
+        options.chunkedMode = false;
+        var ft = new FileTransfer();
+        ft.upload(imageURI, APIURL+"foreraa_users/"+userData.id+"/changeProfileImage", function(result){
+            console.log('successfully uploaded ' + result.response);
+            responseData=JSON.parse(result.response);
+            console.log(responseData.success);
+            if(responseData.success){
+                $(".loader").hide();
+                $("#userImageData").attr('src',responseData.result.image);
+                window.sessionStorage.setItem("userData", JSON.stringify(responseData.result));
+            }
+        }, function(error){
+            console.log('error : ' + JSON.stringify(error));
+        }, options);
+    }, onFailPhoto, { quality: 50,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        destinationType: Camera.DestinationType.FILE_URI
+    });
+})

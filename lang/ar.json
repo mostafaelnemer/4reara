@@ -86,10 +86,15 @@
   "phone":"رقم الهاتف",
   "facebook_link":"فيس بوك",
   "google_link":"جووجل",
-  "instgram_link":"انستجرام",
+  "instagram_link":"انستجرام",
   "linkedin_link":"لينكدان",
   "twitter_link":"تويتر",
   "youtube_link":"يوتيوب",
   "update":"تحديث",
-  "login_now":"تسجل الدخول"
+  "login_now":"تسجل الدخول",
+  "term_condition":"الشروط و الأحكام",
+  "user_profile":"الملف الشخصى",
+  "upload_image":"رفع الصوره",
+  "trans_language":"English"
+
 }

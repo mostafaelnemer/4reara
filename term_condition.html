@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zxx">
+    
+<!-- Mirrored from kiswa.net/themes/star-restaurant/orange-restaurant/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Apr 2018 08:31:47 GMT -->
+<head>
+        <title>About Us</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="icon" href="images/favicon.png" type="image/x-icon">
+        
+        <!-- Google Fonts -->	
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300italic,800italic,800,700italic,700,600italic,600,400italic,300%7CRoboto+Condensed:400,400i,700,700i%7CGreat+Vibes" rel="stylesheet"> 
+        
+        <!-- Bootstrap Stylesheet -->	
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        
+        <!-- Font Awesome Stylesheet -->
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+            
+        <!-- Custom Stylesheets -->	
+        <link rel="stylesheet" href="css/style.css">
+    <!--<link rel="stylesheet" href="css/orange.css">-->
+    <link rel="stylesheet" href="css/purple.css">
+    <script type="text/javascript" src="cordova.js"></script>
+    </head>
+	
+    <body class="page-body">
+    	
+        <!--====== LOADER =====-->
+        <div class="loader"></div>
+
+
+        <!--============ SIDE-NAV =============-->
+        <div w3-include-html="include/side_nav.html" class="sidenav-content"></div>
+        <!-- end sidenav-content -->
+        <!--=============== FULLSCR-NAV ==============-->
+        <div w3-include-html="include/fullscr_nav.html" id="fullscr-nav" class="fullscr-navigation"></div>
+        <!-- end fullscr-nav -->
+        <!--================ SHOPPING-CART ==============-->
+        <div w3-include-html="include/shopping_cart.html" id="shopping-cart-sidebar" class="shc-sidebar"></div>
+        <!-- shopping-cart-sidebar -->
+        <!--============== USER-PROFILE-SIDEBAR =============-->
+        <div w3-include-html="include/user_profile_sidebar.html" id="user-profile-sidebar" class="user-prf-sidebar"></div>
+        <!-- end user-profile-sidebar -->
+       <div class="canvas">
+            
+            <div class="overlay-black"></div>
+
+           <!--========= HEADER =========-->
+           <div w3-include-html="include/header.html" class="header"></div>
+           <!-- end header -->
+        
+            
+            <!--========= PAGE-COVER =========-->
+            <div class="page-cover">
+                <div class="container-fluid">
+                    <h3><span class="cover-left-icon pull-left"><i class="fa fa-info"></i></span>About Us<span class="cover-right-icon pull-right"><i class="fa fa-info"></i></span></h3>
+                </div><!-- end container-fluid -->
+            </div><!-- end page-cover -->
+            
+         
+            <!--=================== PAGE-WRAPPER ================-->
+            <section class="page-wrapper innerpage-section-padding">
+                <div id="about-page" >
+                    <div class="container-fluid" id="pageContent">
+
+
+                    </div><!-- end container-fluid -->
+                </div><!-- end about-page -->
+            </section><!-- end page-wrapper -->
+            
+
+            
+        </div><!-- end canvas -->
+        
+        
+   		<!-- Page Scripts Starts -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/custom-navigation.js"></script>
+        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places" async defer></script>-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places"> </script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/index.js"></script>
+        <script>
+            $(".loader").show();
+            $.ajax({
+                type: "GET",
+                url: makeURL('termCondition'),
+                success: function (msg) {
+                    if(msg.success){
+                        $("#pageContent").html(msg.result.description)
+                    }
+                    $(".loader").hide();
+                }
+
+            });
+        </script>
+        <!-- Page Scripts Ends -->
+    
+    </body>
+
+</html>
