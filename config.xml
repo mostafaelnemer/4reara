@@ -10,7 +10,7 @@
     <content src="index.html" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion"  value="16" />
+    <preference name="android-minSdkVersion"  value="17" />
     <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.0" />
     <plugin name="cordova-plugin-firebase" source="npm" spec="~1.0.5" />
     <plugin name="cordova-plugin-local-notification" source="npm" spec="~0.8.4" />
