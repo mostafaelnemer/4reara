@@ -13,10 +13,10 @@
     <preference name="android-minSdkVersion"  value="16" />
     <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.0" />
     <plugin name="cordova-plugin-firebase" source="npm" spec="~1.0.5" />
-    <plugin name="cordova-plugin-local-notification" source="npm" spec="~0.8.4" />
+    <plugin name="cordova-plugin-local-notification" source="npm" spec="~1.0.3" />
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~2.0.2" />
     <plugin name="cordova-plugin-camera" source="npm" spec="~4.0.3" />
-    <plugin name="cordova-plugin-media-capture" source="npm" spec="~3.0.3" />
+    <plugin name="cordova-plugin-media-capture" source="npm" spec="~3.0.2" />
     <plugin name="cordova-plugin-device" source="npm" spec="~2.0.1" />
     <plugin name="cordova-plugin-file" source="npm" spec="~6.0.1" />
     <plugin name="cordova-plugin-geolocation" source="npm" spec="~4.0.3" />
