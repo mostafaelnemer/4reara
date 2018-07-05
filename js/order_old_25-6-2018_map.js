@@ -117,7 +117,6 @@ $(document).ready(function(){
             });
         }
         function initMap() {
-            var markers=[];
             var directionsService = new google.maps.DirectionsService;
             // var places = new google.maps.places.PlacesService(map);
             var infowindow = new google.maps.InfoWindow();
@@ -128,6 +127,8 @@ $(document).ready(function(){
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 gestureHandling: 'greedy'
             });
+/*origin: orderData.place_of_delivery_address,
+                destination: orderData.delivery_place_address,*/
             var myCoords = {
                 route: [
                     new google.maps.LatLng(orderData.place_of_delivery_latitude,orderData.place_of_delivery_longitude),
@@ -236,7 +237,7 @@ $(document).ready(function(){
                     icon: markerPath,
                     map: map
                 });
-                markers.push(marker);
+
                 redirectTo(marker, marker.label.text);
             }
 
@@ -346,24 +347,166 @@ $(document).ready(function(){
                     drawMarkers(myCoords[key][j], color, key);
                 }
             });
-            setInterval(function(){
+            /*var center;
 
-                $.ajax({
-                    type: "GET",
-                    url: makeURL('foreraa_orders/'+orderData.order_id),
-                    success: function (msg) {
-                        if(msg.success){
-                            orderData=msg.result;
-                            markers[1].setPosition( new google.maps.LatLng(orderData.delegate_lastLatitude,orderData.delegate_lastLongitude));
-                            window.sessionStorage.setItem("orderData",JSON.stringify(orderData));
-                        }
+            function calculateCenter() {
+                center = map.getCenter();
+            }*/
+
+           /* google.maps.event.addListenerOnce(map, 'idle', function() {
+                $('.infoMarker').append('<span class="close-btn"></span><div class="routes-icon"></div>');
+                map.setZoom(9);
+                calculateCenter();
+                if ($('body').hasClass('routes')) {
+                    $('.media-holder .main-loading-overlay').fadeOut();
+                }
+            });*/
+
+           /* google.maps.event.addDomListener(window, 'resize', function() {
+                console.log('center');
+                setTimeout(function() {
+                    map.setCenter(center);
+                }, 100);
+            });*/
+
+            /*google.maps.event.addDomListener(window, 'scroll', function() {
+                console.log('center');
+                setTimeout(function() {
+                    map.setCenter(center);
+                }, 100);
+            });*/
+
+        }
+        google.maps.event.addDomListener(window, 'load', function() {
+            initMap();
+        });
+        /*function initMap() {
+            var infowindow = new google.maps.InfoWindow();
+            var directions = new google.maps.DirectionsService();
+            var renderer = new google.maps.DirectionsRenderer({
+                suppressPolylines: true,
+                infoWindow: infowindow,
+            });
+            var map;
+
+            function initialize() {
+                var mapOptions = {
+                    zoom: 20,
+                    center: new google.maps.LatLng(40.7482333, -73.8681295),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                map = new google.maps.Map(document.getElementById('order-map'), mapOptions);
+                route();
+            }
+
+            function route() {
+                var request = {
+                    origin: new google.maps.LatLng( 40.716153, -73.802472),
+                    destination: new google.maps.LatLng( 40.756326, -73.969999),
+                    travelMode: google.maps.DirectionsTravelMode.WALKING
+                };
+                directions.route(request, function(response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        renderer.setDirections(response);
+                        renderer.setMap(map);
+
+                        renderDirectionsPolylines(response);
+                        console.log(renderer);
+
+                    } else {
+                        renderer.setMap(null);
+
                     }
 
                 });
-            },5000)
 
+            }
+
+            var polylineOptions = {
+                strokeColor: '#C83939',
+                strokeOpacity: 1,
+                strokeWeight: 4
+            };
+            var polylines = [];
+            function renderDirectionsPolylines(response) {
+                for (var i=0; i<polylines.length; i++) {
+                    polylines[i].setMap(null);
+                }
+                var legs = response.routes[0].legs;
+                for (i = 0; i < legs.length; i++) {
+                    var steps = legs[i].steps;
+                    for (j = 0; j < steps.length; j++) {
+                        var nextSegment = steps[j].path;
+                        var stepPolyline = new google.maps.Polyline(polylineOptions);
+                        for (k = 0; k < nextSegment.length; k++) {
+                            stepPolyline.getPath().push(nextSegment[k]);
+                        }
+                        polylines.push(stepPolyline);
+                        stepPolyline.setMap(map);
+                        // route click listeners, different one on each step
+                        google.maps.event.addListener(stepPolyline, 'click', function(evt) {
+                            console.log('stepPolyline')
+                            console.log(stepPolyline)
+                            infowindow.setContent("you clicked on the route<br>" + evt.latLng.toUrlValue(6));
+                            infowindow.setPosition(evt.latLng);
+                            infowindow.open(map);
+                        })
+                    }
+                }
+
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+        }*/
+        /*function initMap() {
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var map = new google.maps.Map(document.getElementById('order-map'), {
+                zoom: 10,
+                center: {lat: Number(orderData.place_of_delivery_latitude), lng: Number(orderData.place_of_delivery_longitude)},
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                gestureHandling: 'greedy'
+            });
+            directionsDisplay.setMap(map);
+            //directionsDisplay.setPanel(document.getElementById('right-panel'));
+            calculateAndDisplayRoute(directionsService, directionsDisplay);
         }
 
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            /!* var waypts = [];
+             var checkboxArray = document.getElementById('waypoints');
+             for (var i = 0; i < checkboxArray.length; i++) {
+                 if (checkboxArray.options[i].selected) {
+                     waypts.push({
+                         location: checkboxArray[i].value,
+                         stopover: true
+                     });
+                 }
+             }*!/
+            waypoints=[];
+            if(userData.type=='customer'&&orderData.delegate_id){
+                waypoints.push({
+                    location: new google.maps.LatLng( Number(orderData.delegate_lastLatitude), Number(orderData.delegate_lastLongitude)),
+                    stopover: true
+                });
+            }
+            directionsService.route({
+                origin: orderData.place_of_delivery_address,
+                destination: orderData.delivery_place_address,
+                waypoints: waypoints,
+                optimizeWaypoints: true,
+                travelMode: 'DRIVING',
+            }, function(response, status) {
+                console.log(orderData.place_of_delivery_address," - ",orderData.delivery_place_address);
+                if (status === 'OK') {
+                    directionsDisplay.setDirections(response);
+                    var route = response.routes[0];
+                    console.log(route);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+
+        }*/
         initMap();
     }else{
         window.location.href="my-orders.html"

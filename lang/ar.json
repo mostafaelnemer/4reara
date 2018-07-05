@@ -95,6 +95,9 @@
   "term_condition":"الشروط و الأحكام",
   "user_profile":"الملف الشخصى",
   "upload_image":"رفع الصوره",
+  "make_online":"تغير الى متصل",
+  "make_offline":"تغير الى غير متصل",
+  "delegate_position":"موقع المندوب",
   "trans_language":"English"
 
 }

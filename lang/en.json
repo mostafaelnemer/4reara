@@ -95,5 +95,8 @@
     "term_condition":"Term & condition",
     "user_profile":"User Profile",
     "upload_image":"Upload Image",
+    "make_online":"Make Online",
+    "make_offline":"Make Offline",
+    "delegate_position":"Delegate Position",
     "trans_language":"العربية"
 }

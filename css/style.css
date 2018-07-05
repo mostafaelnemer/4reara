@@ -2102,3 +2102,13 @@ a:hover{
 	font-size:16px;
 	text-align:center;
 }
+.online,.offline{
+	font-size: 10pt;
+	margin-right: 5px;
+}
+.online{
+	color:#0fd00f;
+}
+.offline{
+	color:#f52a2a;
+}

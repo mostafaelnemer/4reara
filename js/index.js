@@ -90,7 +90,6 @@ if(userData){
     userData=JSON.parse(userData);
     user_id=userData.id
     $("#user_id,.user_id").val(user_id);
-
 }
 $(".innerpage-section-padding").css({"min-height":$(window).height()+50})
 //console.log(userData);
@@ -229,15 +228,66 @@ function updateStatusCallback(response) {
     }
 }
 function onDeviceReady() {
-
+    if ("Notification" in window) {
+        Notification.requestPermission(function (permission) {
+            // If the user accepts, let's create a notification
+            if (permission === 'granted') {
+                var notification = new Notification("My title", {
+                    tag: 'message1',
+                    body: "My body"
+                });
+                notification.onshow  = function() { console.log('show'); };
+                notification.onclose = function() { console.log('close'); };
+                notification.onclick = function() { console.log('click'); };
+            }
+        });
+    }
+    window.FirebasePlugin.getToken(function(token) {
+        // save this server-side and use it to push notifications to this device
+        console.log('getToken');
+        console.log(token);
+    }, function(error) {
+        console.log('getToken');
+        console.error(error);
+    });
+    window.FirebasePlugin.onTokenRefresh(function(token) {
+        // save this server-side and use it to push notifications to this device
+        console.log('onTokenRefresh');
+        console.log(token);
+    }, function(error) {
+        console.log('onTokenRefresh');
+        console.error(error);
+    });
+    window.FirebasePlugin.onNotificationOpen(function(notificationData) {
+        console.log('notification');
+        console.log(notificationData);
+        var notification = new Notification("My title", {
+            tag: 'message1',
+            body: notificationData.body
+        });
+    }, function(error) {
+        console.log('notification');
+        console.error(error);
+    });
+    window.FirebasePlugin.hasPermission(function(data){
+        console.log('hasPermission');
+        console.log(data.isEnabled);
+    });
     if(userData){
         changeData=setInterval(function(){
             if($("#userImage").length){
                 $("#logoutMenu").removeClass('hidden');
                 $("#userImage").attr('src',userData.image);
-                $("#userName").html(userData.name);
+                userNameHtml=(userData.type=='delegate')?'<i id="delegateStatues" class="fa fa-circle '+userData.delegateData.status+'"></i>'+userData.name:+userData.name;
+                $("#userName").html(userNameHtml);
                 if(userData.type=='customer'){
                     $("#delegateRatings").removeClass('hidden')
+                }else{
+                    if(userData.delegateData.status=='online'){
+                        $("#makeOffline").removeClass('hidden');
+                    }else{
+                        $("#makeOnline").removeClass('hidden');
+                    }
                 }
                 clearInterval(changeData);
             }
@@ -607,7 +657,7 @@ function sendlatlong(lastLongitude,lastLatitude) {
     saveLocationSession(lastLongitude,lastLatitude);
     $.ajax({
         type: "POST",
-        url: makeURL('foreraa_users/' + user_id + '/saveLocation'),
+        url: makeURL('foreraa_users/' + userData.id + '/saveLocation'),
         data: {"lastLongitude": lastLongitude, "lastLatitude": lastLatitude},
         success: function (msg) {
             if (msg.success) {
@@ -1422,4 +1472,38 @@ $(document).on('click','#profileImageInput',function(e){
         allowEdit: true,
         destinationType: Camera.DestinationType.FILE_URI
     });
-})
+});
+$(document).on('click','#makeOffline',function(e){
+    e.preventDefault();
+    $(this).addClass('hidden')
+    $.ajax({
+        type: "POST",
+        url: makeURL('foreraa_users/'+userData.id+'/changeStatues'),
+        data:{"status":'offline'},
+        success: function (msg) {
+            if(msg.success){
+                $("#makeOnline").removeClass('hidden');
+                $("#delegateStatues").removeClass('online offline').addClass('offline')
+                userData.delegateData.status='offline';
+                window.sessionStorage.setItem("userData", JSON.stringify(userData));
+            }
+        }
+    });
+});
+$(document).on('click','#makeOnline',function(e){
+    e.preventDefault();
+    $(this).addClass('hidden')
+    $.ajax({
+        type: "POST",
+        url: makeURL('foreraa_users/'+userData.id+'/changeStatues'),
+        data:{"status":'online'},
+        success: function (msg) {
+            if(msg.success){
+                $("#makeOffline").removeClass('hidden');
+                $("#delegateStatues").removeClass('online offline').addClass('online')
+                userData.delegateData.status='online';
+                window.sessionStorage.setItem("userData", JSON.stringify(userData));
+            }
+        }
+    });
+});
