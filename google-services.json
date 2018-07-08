@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "397826405411",
+    "firebase_url": "https://foreraa-200210.firebaseio.com",
+    "project_id": "foreraa-200210",
+    "storage_bucket": "foreraa-200210.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397826405411:android:28a37504f73e405f",
+        "android_client_info": {
+          "package_name": "com.phonegap.foreraaphonegap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397826405411-orha8ad937ul7634r2r0ec45slpjkr29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtyANeY1SCgzbAsfJ5TbimORLgpY0jokM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
