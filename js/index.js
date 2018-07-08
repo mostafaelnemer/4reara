@@ -242,37 +242,27 @@ function onDeviceReady() {
             }
         });
     }
-    window.FirebasePlugin.getToken(function(token) {
-        // save this server-side and use it to push notifications to this device
-        console.log('getToken');
-        console.log(token);
-    }, function(error) {
-        console.log('getToken');
-        console.error(error);
+    cordova.plugins.firebase.messaging.onMessage(function(payload) {
+        console.log("New foreground FCM message: ", payload);
     });
-    window.FirebasePlugin.onTokenRefresh(function(token) {
-        // save this server-side and use it to push notifications to this device
-        console.log('onTokenRefresh');
-        console.log(token);
-    }, function(error) {
-        console.log('onTokenRefresh');
-        console.error(error);
+    cordova.plugins.firebase.messaging.onBackgroundMessage(function(payload) {
+        console.log("New background FCM message: ", payload);
     });
-    window.FirebasePlugin.onNotificationOpen(function(notificationData) {
-        console.log('notification');
-        console.log(notificationData);
-        var notification = new Notification("My title", {
-            tag: 'message1',
-            body: notificationData.body
-        });
-    }, function(error) {
-        console.log('notification');
-        console.error(error);
+    cordova.plugins.firebase.messaging.requestPermission().then(function(token) {
+        console.log("APNS device token: ", token);
     });
-    window.FirebasePlugin.hasPermission(function(data){
-        console.log('hasPermission');
-        console.log(data.isEnabled);
+    cordova.plugins.firebase.messaging.getToken().then(function(token) {
+        console.log("Got device token: ", token);
     });
+    cordova.plugins.firebase.messaging.onTokenRefresh(function() {
+        console.log("Device token updated");
+    });
+    cordova.plugins.firebase.messaging.subscribe("New Topic");
+    cordova.plugins.firebase.messaging.unsubscribe("New Topic");
+    cordova.plugins.firebase.messaging.getBadge().then(function(value) {
+        console.log("Badge value: ", value);
+    });
+
     if(userData){
         changeData=setInterval(function(){
             if($("#userImage").length){
