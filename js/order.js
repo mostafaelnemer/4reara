@@ -117,58 +117,253 @@ $(document).ready(function(){
             });
         }
         function initMap() {
+            var markers=[];
             var directionsService = new google.maps.DirectionsService;
-            var directionsDisplay = new google.maps.DirectionsRenderer;
+            // var places = new google.maps.places.PlacesService(map);
+            var infowindow = new google.maps.InfoWindow();
+
             var map = new google.maps.Map(document.getElementById('order-map'), {
-                zoom: 6,
-                center: {lat: Number(orderData.place_of_delivery_latitude), lng: Number(orderData.place_of_delivery_longitude)},
+                zoom: 20,
+                center: new google.maps.LatLng(orderData.place_of_delivery_latitude, orderData.place_of_delivery_longitude),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 gestureHandling: 'greedy'
             });
-            directionsDisplay.setMap(map);
-            //directionsDisplay.setPanel(document.getElementById('right-panel'));
-            calculateAndDisplayRoute(directionsService, directionsDisplay);
-        }
+            var myCoords = {
+                route: [
+                    new google.maps.LatLng(orderData.place_of_delivery_latitude,orderData.place_of_delivery_longitude),
+                    new google.maps.LatLng(orderData.delegate_lastLatitude,orderData.delegate_lastLongitude),
+                    new google.maps.LatLng(orderData.delivery_place_latitude, orderData.delivery_place_longitude)
 
-        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-            /* var waypts = [];
-             var checkboxArray = document.getElementById('waypoints');
-             for (var i = 0; i < checkboxArray.length; i++) {
-                 if (checkboxArray.options[i].selected) {
-                     waypts.push({
-                         location: checkboxArray[i].value,
-                         stopover: true
-                     });
-                 }
-             }*/
-            /* var geocoder = new google.maps.Geocoder();
-             var latlng = {lat: lastLatitude, lng: lastLongitude};
-             geocoder.geocode({'location': latlng}, function(results, status) {
-                 if (status === google.maps.GeocoderStatus.OK) {
-                     address=results[0].formatted_address;
-                     console.log(address);
-                 }else {
-                     alert('Geocode was not successful for the following reason: ' + status);
-                 }
-             });*/
-            directionsService.route({
-                origin: orderData.place_of_delivery_address,
-                destination: orderData.delivery_place_address,
-                waypoints: [],
-                optimizeWaypoints: true,
-                travelMode: 'DRIVING',
-            }, function(response, status) {
-                console.log(orderData.place_of_delivery_address," - ",orderData.delivery_place_address);
-                if (status === 'OK') {
+                ],
+            };
 
-                    directionsDisplay.setDirections(response);
-                    var route = response.routes[0];
-                    console.log(route);
-                } else {
-                    window.alert('Directions request failed due to ' + status);
+            var routesOptions = {
+                route: {
+                    color: '#70cc23'
+                }
+            };
+
+            var renderer = new google.maps.DirectionsRenderer({
+                suppressPolylines: true,
+                suppressMarkers: true,
+                infoWindow: infowindow,
+                polylineOptions: {
+                    strokeColor: '#C83939',
+                    strokeOpacity: 0,
+                    strokeWeight: 1,
+                    icons: [{
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            fillColor: '#C83939',
+                            scale: 3,
+                            strokeOpacity: 1
+                        },
+                        offset: '0',
+                        repeat: '15px'
+                    }]
+                }
+
+            });
+
+            function renderDirections(result, color, course) {
+                renderer.setDirections(result);
+                renderer.setMap(map);
+                renderDirectionsPolylines(result, color, course);
+                console.log(renderer.getDirections());
+            }
+            var polylineOptions = {
+                strokeColor: '#C83939',
+                strokeOpacity: 1,
+                strokeWeight: 4
+            };
+
+            function renderDirectionsPolylines(response, color, course) {
+                var polylines = [];
+                polylineOptions.strokeColor = color;
+                for (var i = 0; i < polylines.length; i++) {
+                    polylines[i].setMap(null);
+                }
+                var legs = response.routes[0].legs;
+                for (i = 0; i < legs.length; i++) {
+                    var steps = legs[i].steps;
+                    for (j = 0; j < steps.length; j++) {
+                        var nextSegment = steps[j].path;
+                        var stepPolyline = new google.maps.Polyline(polylineOptions);
+                        for (k = 0; k < nextSegment.length; k++) {
+                            stepPolyline.getPath().push(nextSegment[k]);
+                        }
+                        stepPolyline.setMap(map);
+                        polylines.push(stepPolyline);
+                        google.maps.event.addListener(stepPolyline, 'click', function(evt) {
+                            infowindow.setContent("you clicked on " + course + "<br>" + evt.latLng.toUrlValue(6));
+                            infowindow.setPosition(evt.latLng);
+                            infowindow.open(map);
+                        })
+                    }
+                }
+            }
+
+            function drawMarkers(position, color, course) {
+                if(myCoords.route[0].lat()===position.lat()&&myCoords.route[0].lng()===position.lng()){
+                    console.log('first');
+                    title=strings['place_of_delivery'];
+                    markerPath='img/marker-shop.png';
+                   /* markerPath={
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 5,
+                        fillColor: color,
+                        fillOpacity: 1,
+                        strokeWeight: 0,
+                        image: ''
+                    };*/
+                }else if(myCoords.route[myCoords.route.length-1].lat()===position.lat()&&myCoords.route[myCoords.route.length-1].lng()===position.lng()){
+                    console.log('last');
+                    title=strings['delivery_place'];
+                    markerPath='img/marker-home.png';
+                }else if(myCoords.route.length>=2&&myCoords.route[1].lat()===position.lat()&&myCoords.route[1].lng()===position.lng()){
+                    console.log('delegate');
+                    title=strings['delegate_position'];
+                    markerPath='img/marker-delegate.png';
+                }
+                var marker = new google.maps.Marker({
+                    position: position,
+                    clickable: true,
+                    title: title,
+                    label: {
+                        text: course,
+                        fontSize: "0px"
+                    },
+                    icon: markerPath,
+                    map: map
+                });
+                markers.push(marker);
+                redirectTo(marker, marker.label.text);
+            }
+
+            function buildPath(origin, destination, wayPoints, color, route) {
+                directionsService.route({
+                        origin: origin,
+                        destination: destination,
+                        waypoints: wayPoints,
+                        travelMode: google.maps.DirectionsTravelMode.DRIVING
+                    },
+                    function(result, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            renderDirections(result, color, route);
+                        }
+                    });
+                var labelPosition = setLabelPosition(route);
+                console.log(labelPosition, 'labelPosition');
+            }
+
+            function redirectTo(element, identifier) {
+                google.maps.event.addListener(element, 'click', function(evt) {
+                    console.log(evt.latLng.lat(),evt.latLng.lng())
+                    console.log(myCoords.route[0].lat(),myCoords.route[0].lng())
+                    if(myCoords.route[0].lat()===evt.latLng.lat()&&myCoords.route[0].lng()===evt.latLng.lng()){
+                        console.log('first');
+                        if(userData.type=='delegate'){
+                            navigator.geolocation.getCurrentPosition(function(currentPosition){
+                                var longitude = currentPosition.coords.longitude;
+                                var latitude = currentPosition.coords.latitude;
+
+                                var geocoder = new google.maps.Geocoder();
+                                var latlng = {lat: latitude, lng: longitude};
+                                geocoder.geocode({'location': latlng}, function(results, status) {
+                                    if (status === google.maps.GeocoderStatus.OK) {
+                                        address=results[0].formatted_address;
+                                        launchnavigator.navigate(orderData.place_of_delivery_address, {
+                                            start: address,
+                                            enableDebug: true,
+                                            successCallback: function(){},
+                                            errorCallback: function(){}
+                                        });
+                                        return false;
+                                    } else {
+                                        alert('Geocode was not successful for the following reason: ' + status);
+                                    }
+                                });
+
+                            }, onError)
+                        }
+
+                    }else if(myCoords.route[myCoords.route.length-1].lat()===evt.latLng.lat()&&myCoords.route[myCoords.route.length-1].lng()===evt.latLng.lng()){
+                        console.log('last');
+                        if(userData.type=='delegate'){
+                            navigator.geolocation.getCurrentPosition(function(currentPosition){
+                                var longitude = currentPosition.coords.longitude;
+                                var latitude = currentPosition.coords.latitude;
+                                var geocoder = new google.maps.Geocoder();
+                                var latlng = {lat: latitude, lng: longitude};
+                                geocoder.geocode({'location': latlng}, function(results, status) {
+                                    if (status === google.maps.GeocoderStatus.OK) {
+                                        address=results[0].formatted_address;
+                                        launchnavigator.navigate(orderData.delivery_place_latitude, {
+                                            start: start,
+                                            enableDebug: true,
+                                            successCallback: function(){},
+                                            errorCallback: function(){}
+                                        });
+                                        return false;
+                                    } else {
+                                        alert('Geocode was not successful for the following reason: ' + status);
+                                    }
+                                });
+
+                            }, onError)
+                        }
+
+                    }else if(myCoords.route.length>=2&&myCoords.route[1].lat()===evt.latLng.lat()&&myCoords.route[1].lng()===evt.latLng.lng()){
+                        console.log('delegate');
+                    }
+                })
+            };
+
+            function setLabelPosition(course) {
+                switch (course) {
+                    case 'route':
+                        return 'labelAnchor: new google.maps.Point(90,20))';
+                        break;
+                }
+            }
+
+            Object.keys(myCoords).forEach(function(key) {
+                var curentOrigin = myCoords[key][0],
+                    curentDestination = myCoords[key][myCoords[key].length - 1],
+                    wayPoints = [],
+                    color = routesOptions[key].color;
+                for (var j = 1; j < myCoords[key].length - 1; j++) {
+                    wayPoints.push({
+                        location: myCoords[key][j],
+                        stopover: true
+                    });
+                    if (j === myCoords[key].length - 2) {
+                        console.log(curentOrigin)
+                        buildPath(curentOrigin, curentDestination, wayPoints, color, key);
+                    }
+                }
+                for (var j = 0; j < myCoords[key].length; j++) {
+                    drawMarkers(myCoords[key][j], color, key);
                 }
             });
+            setInterval(function(){
+
+                $.ajax({
+                    type: "GET",
+                    url: makeURL('foreraa_orders/'+orderData.order_id),
+                    success: function (msg) {
+                        if(msg.success){
+                            orderData=msg.result;
+                            markers[1].setPosition( new google.maps.LatLng(orderData.delegate_lastLatitude,orderData.delegate_lastLongitude));
+                            window.sessionStorage.setItem("orderData",JSON.stringify(orderData));
+                        }
+                    }
+
+                });
+            },5000)
+
         }
+
         initMap();
     }else{
         window.location.href="my-orders.html"
