@@ -72,9 +72,27 @@
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places" async defer></script>-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places"> </script>
 <script src="js/jquery.validate.min.js"></script>
+<script src="js/pulltorefresh.js"></script>
 <script src="js/index.js"></script>
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="js/parcel_place_of_delivery.js"></script>
+<script>
+    PullToRefresh.init({
+        mainElement: '.page-wrapper', // above which element?
+        onRefresh: function (cb) {
+            setTimeout(function () {
+                cb();
+                navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            }, 1500);
+        }
+    });
+    /*window.document.addEventListener("scroll", function(){
+        if(window.pageYOffset == 0){
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            window.scrollBy(0, 60);
+        }
+    },false)*/
+</script>
 <!-- Page Scripts Ends -->
 </body>
 

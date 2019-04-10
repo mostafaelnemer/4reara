@@ -31,6 +31,7 @@
 <!-- shopping-cart-sidebar -->
 <!--============== USER-PROFILE-SIDEBAR =============-->
 <div w3-include-html="include/user_profile_sidebar.html" id="user-profile-sidebar" class="user-prf-sidebar"></div>
+
 <!-- end user-profile-sidebar -->
 <div class="canvas">
     <div class="overlay-black"></div>
@@ -53,8 +54,8 @@
                 <input type="hidden" id="address">
                 <div class="clerfix"></div>
                 <button id="getMyLocation" style="position: fixed; bottom: 0;left: 0; width: 50%;border-radius: 0;" class="btn btn-orange btn-radius"><i class="far fa-compass"></i> <span trans-lang-html="get_location"></span></button>
-                <button id="getAllServices" style="position: fixed; bottom: 0;right: 0;width: 50%;border-radius: 0;"  class="btn btn-orange btn-radius hidden"><i class="fa fa-th-large"></i> <span trans-lang-html="services"></span> </button>
-                <button id="getAllOrders"  style="position: fixed; bottom: 0;right: 0;width: 50%;border-radius: 0;" href="delegate-orders.html" class="btn btn-orange btn-radius hidden"><i class="fa fa-th-large"></i> <span trans-lang-html="orders"></span></button>
+                <button id="getAllServices" style="position: fixed; bottom: 0;right: 0;width: 50%;border-radius: 0;"  class="btn btn-orange btn-radius hidden"><i class="fa fa-th-large"></i> <span trans-lang-html="make_order"></span> </button>
+                <button id="getAllOrders"  style="position: fixed; bottom: 0;right: 0;width: 50%;border-radius: 0;" href="delegate-orders.html" class="btn btn-orange btn-radius hidden"><i class="fa fa-th-large"></i> <span trans-lang-html="get_orders"></span></button>
             </div><!-- end container-fluid -->
         </div><!-- end register-page -->
     </section><!-- end page-wrapper -->
@@ -69,7 +70,29 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo"> </script>
 <script src="js/custom-navigation.js"></script>
 <script src="js/jquery.validate.min.js"></script>
+<script src="js/pulltorefresh.js"></script>
 <script src="js/index.js"></script>
+<script>
+    PullToRefresh.init({
+        mainElement: '.page-wrapper', // above which element?
+        onRefresh: function (cb) {
+            setTimeout(function () {
+                cb();
+                navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            }, 1500);
+        },
+        instructionsRefreshing: '',
+        iconRefreshing: '<img style="width: 30px;position: relative;top:10px;" src="img/loading.svg">',
+    });
+    /*window.document.addEventListener("scroll", function(){
+        if(window.pageYOffset == 0){
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            window.scrollBy(0, 60);
+
+        }
+    },false)*/
+
+</script>
 <!--<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo"></script>-->
 <!--
 <script type="text/javascript" src="js/markerwithlabel.js"></script>

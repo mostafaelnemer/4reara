@@ -2,7 +2,6 @@ userData=window.sessionStorage.getItem('userData');
 console.log(userData)
 if(userData){
     userData=JSON.parse(userData);
-    console.log('hhhhhhhhhhhhhhhhhhhh')
     console.log(userData)
     if(userData.type=='customer'){
         $("#getAllServices").removeClass('hidden');

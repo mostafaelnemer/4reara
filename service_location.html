@@ -49,8 +49,6 @@
         <div class="col-xs-12 col-sm-offset-3 col-sm-6">
             <div id="response"></div>
             <form id="service-order-form">
-
-
                 <div class="form-group col-xs-12">
                     <label for="service_location_place_of_delivery" trans-lang-html="place_of_delivery"> </label>
                     <a href="javascript:void(0)" id="service_location_place_of_delivery" style="display:inline-table;" class="form-control">
@@ -66,6 +64,14 @@
                     </a>
                 </div>
                 <div class="form-group col-xs-12">
+                    <label for="delivery_time" trans-lang-html="delivery_time"></label>
+                    <select name="delivery_time" id="delivery_time" class="form-control">
+                        <option value="1h">1 Hours</option>
+                        <option value="2h">2 Hours</option>
+                        <option value="3h">3 Hours</option>
+                    </select>
+                </div>
+                <div class="form-group col-xs-12">
                     <label for="order_details" trans-lang-html="order_details"></label>
                     <textarea name="details" class="form-control" id="order_details" trans-lang-placeholder="write_details" cols="30" rows="10"></textarea>
                     <input type="hidden" name="user_id" id="user_id">
@@ -79,22 +85,28 @@
                     <input type="hidden" name="delivery_place_longitude" id="delivery_place_longitude">
                     <input type="hidden" name="delivery_place_address" data-element="#delivery_place" id="delivery_place_address">
                 </div>
-                <div class="form-group col-xs-4">
+                <div class="form-group col-xs-6">
                     <label for="distance" trans-lang-html="order_details"></label>
                     <p id="distance" class="form-control">0 KM</p>
                 </div>
-                <div class="form-group col-xs-4">
+                <div class="form-group col-xs-6">
                     <label for="duration" trans-lang-html="duration"></label>
                     <p id="duration" class="form-control">0 min</p>
                 </div>
-                <div class="form-group col-xs-4">
+                <div class="form-group col-xs-6">
                     <label for="cost" trans-lang-html="cost_of_service"></label>
                     <p data-cost="250" id="cost" class="form-control">250 $</p>
                 </div>
+                <div class="form-group col-xs-6">
+                    <label for="coupon" trans-lang-html="coupon"></label>
+                    <input type="text" id="coupon" name="coupon" trans-lang-placeholder="enter_coupon" class="form-control">
+                </div>
+                <div class="clearfix"></div>
                 <div class="text-center">
                     <button type="button" class="btn btn-primary" trans-lang-html="take_photo" id='takePhoto'></button>
                     <button type="button" class="btn btn-success" trans-lang-html="select_photo_from_gallery" id='selectPhoto'></button>
                 </div>
+
                 <div id="imagesIDS"></div>
                 <div id="imagesSelected" class="text-center" style="padding: 10px" trans-lang-html="no_image_selected"></div>
                 <div class="clearfix"></div>
@@ -116,6 +128,7 @@
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places" async defer></script>-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places"> </script>
 <script src="js/jquery.validate.min.js"></script>
+<script src="js/pulltorefresh.js"></script>
 <script src="js/index.js"></script>
 <script src="js/service_location.js"></script>
 <!-- Page Scripts Ends -->

@@ -113,14 +113,19 @@
                                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                                 </div>
                             </div>
-                            
+                            <div class="checkbox">
+                            	<label>
+                            		<input type="checkbox" name="term_condition" value="1" id="term_condition">
+                            		<span trans-lang-html="i_agree"></span> <a href="term_condition.html"><span trans-lang-html="term_condition"></span></a>
+                            	</label>
+                            </div>
                             <button type="submit" id="regbut" class="btn btn-orange btn-radius" trans-lang-html="register_now"></button>
                         </form>
                         
                         <div class="form-page-links">
                             <p> <a href="index.html" trans-lang-html="register_now"></a>  <span trans-lang-html="already_have_acc" ></span> </p>
                         </div><!-- end form-page-links -->
-
+                        <button id="facebook-btn" class="btn btn-primary" onclick="facebookLogin()"><i class="fa fa-facebook"></i></button>
                     </div><!-- end container-fluid -->
                 </div><!-- end register-page -->
             </section><!-- end page-wrapper -->
@@ -155,9 +160,39 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/custom-navigation.js"></script>
         <script src="js/jquery.validate.min.js"></script>
+        <script src="js/pulltorefresh.js"></script>
         <script src="js/index.js"></script>
         <script src="js/register.js"></script>
-
+        <script>
+            function facebookLogin(){
+                facebookConnectPlugin.login(["public_profile","email"],function(result){
+                    console.log(JSON.stringify(result));
+                    facebookConnectPlugin.api("/me?fields=email,name,picture",["public_profile","email"],function(userData){
+                        console.log(userData);
+                        $("#register-form #social").val('facebook');
+                        $("#register-form #name").val(userData.name);
+                        $("#register-form #email").val(userData.email);
+                    },function(error){
+                        console.log(error);
+                    })
+                },function(error){
+                    console.log(error);
+                });
+            }
+            PullToRefresh.init({
+                mainElement: '.page-wrapper', // above which element?
+                onRefresh: function (cb) {
+                    $("#register-form")[0].reset();
+                    cb();
+                }
+            });
+            /*window.document.addEventListener("scroll", function(){
+                if(window.pageYOffset == 0){
+                    $("#register-form")[0].reset();
+                    window.scrollBy(0, 60);
+                }
+            },false)*/
+        </script>
         <!-- Page Scripts Ends -->
     
     </body>

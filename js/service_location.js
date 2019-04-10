@@ -49,13 +49,40 @@ if(serviceLocationLatitude&&serviceLocationLongitude&&userDataLatitude&&userData
         $("#distanceInput").val(distance);
         $("#duration").html(duration);
         $("#durationInput").val(duration);
-        cost=0;
+        $.ajax({
+            type: "GET",
+            url: makeURL('foreraa_orders/calculateCost'),
+            data:{"distance":distance},
+            success: function (msg) {
+                if(msg.success){
+                    cost=msg.cost;
+                    $("#costInput").val(cost);
+                    $("#cost").html(cost+strings.currency_code);
+                }
+            }
+        });
+       /* cost=0;
         if(parseFloat(distance)<=3){
             cost=3;
         }else{
             cost=((parseFloat(distance)-3)*1)+3;
         }
         $("#costInput").val(cost);
-        $("#cost").html(cost+" $")
+        $("#cost").html(cost+strings.currency_code)*/
     });
 }
+PullToRefresh.init({
+    mainElement: '.page-wrapper', // above which element?
+    onRefresh: function (cb) {
+        setTimeout(function () {
+            cb();
+        }, 1500);
+    }
+});
+/*
+window.document.addEventListener("scroll", function(){
+    if(window.pageYOffset == 0){
+        window.scrollBy(0, 60);
+
+    }
+},false)*/

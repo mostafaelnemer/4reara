@@ -161,7 +161,7 @@
         }
         .chat_area {
             float: left;
-            height: 500px;
+            height: 400px;
             overflow-x: hidden;
             overflow-y: auto;
             width: 100%;
@@ -283,8 +283,14 @@
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places" async defer></script>-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places"> </script>
 <script src="js/jquery.validate.min.js"></script>
+<script src="js/pulltorefresh.js"></script>
 <script src="js/index.js"></script>
 <script src="js/order-chats.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".chat_area").css({"height":$(window).height()-110});
+    });
+</script>
 
 <!-- Page Scripts Ends -->
 </body>

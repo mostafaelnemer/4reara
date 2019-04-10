@@ -81,6 +81,7 @@
         <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places" async defer></script>-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places"> </script>
         <script src="js/jquery.validate.min.js"></script>
+        <script src="js/pulltorefresh.js"></script>
         <script src="js/index.js"></script>
         <script>
             $(".loader").show();
@@ -95,6 +96,38 @@
                 }
 
             });
+            PullToRefresh.init({
+                mainElement: '.page-wrapper', // above which element?
+                onRefresh: function (cb) {
+                    $.ajax({
+                        type: "GET",
+                        url: makeURL('termCondition'),
+                        success: function (msg) {
+                            if(msg.success){
+                                $("#pageContent").html(msg.result.description)
+                            }
+                            cb();
+                        }
+                    });
+                }
+            });
+            /*window.document.addEventListener("scroll", function(){
+                if(window.pageYOffset == 0){
+                    $.ajax({
+                        type: "GET",
+                        url: makeURL('termCondition'),
+                        success: function (msg) {
+                            if(msg.success){
+                                $("#pageContent").html(msg.result.description)
+                            }
+                            window.scrollBy(0, 60);
+                        }
+
+                    });
+
+
+                }
+            },false)*/
         </script>
         <!-- Page Scripts Ends -->
     

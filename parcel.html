@@ -80,17 +80,21 @@
                     <input type="hidden" name="delivery_place_longitude" id="delivery_place_longitude">
                     <input type="hidden" name="delivery_place_address" data-element="#delivery_place" id="delivery_place_address">
                 </div>
-                <div class="form-group col-xs-4">
+                <div class="form-group col-xs-6">
                     <label for="distance" trans-lang-html="order_details"></label>
                     <p id="distance" class="form-control">0 KM</p>
                 </div>
-                <div class="form-group col-xs-4">
+                <div class="form-group col-xs-6">
                     <label for="duration" trans-lang-html="duration"></label>
                     <p id="duration" class="form-control">0 min</p>
                 </div>
-                <div class="form-group col-xs-4">
+                <div class="form-group col-xs-6">
                     <label for="cost" trans-lang-html="cost_of_service"></label>
                     <p data-cost="250" id="cost" class="form-control">250 $</p>
+                </div>
+                <div class="form-group col-xs-6">
+                    <label for="coupon" trans-lang-html="coupon"></label>
+                    <input type="text" id="coupon" name="coupon" trans-lang-placeholder="enter_coupon" class="form-control">
                 </div>
                 <div class="text-center">
                     <button type="button" class="btn btn-primary" trans-lang-html="take_photo" id='takePhoto'></button>
@@ -118,6 +122,7 @@
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places" async defer></script>-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo&libraries=places"> </script>
 <script src="js/jquery.validate.min.js"></script>
+<script src="js/pulltorefresh.js"></script>
 <script src="js/index.js"></script>
 <script src="js/parcel.js"></script>
 <!-- Page Scripts Ends -->

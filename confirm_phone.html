@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zxx">
+<head>
+        <title>Forgot Password</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="icon" href="images/favicon.png" type="image/x-icon">
+        
+        <!-- Google Fonts -->	
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300italic,800italic,800,700italic,700,600italic,600,400italic,300%7CRoboto+Condensed:400,400i,700,700i%7CGreat+Vibes" rel="stylesheet"> 
+        
+        <!-- Bootstrap Stylesheet -->	
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        
+        <!-- Font Awesome Stylesheet -->
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+            
+        <!-- Custom Stylesheets -->	
+        <link rel="stylesheet" href="css/style.css">
+    <!--<link rel="stylesheet" href="css/orange.css">-->
+    <link rel="stylesheet" href="css/purple.css">
+    <script type="text/javascript" src="cordova.js"></script>
+    </head>
+	
+    <body class="page-body">
+    	
+        <!--====== LOADER =====-->
+        <div class="loader"></div>
+        
+        
+        <!--============ SIDE-NAV =============-->
+        <div w3-include-html="include/side_nav.html" class="sidenav-content"></div>
+
+        <div class="sidenav-content">
+            <div id="mySidenav" class="sidenav" >
+                <div id="web-name">
+                    <h2><span><i class="far fa-star"></i></span> <br/> <span>4</span>reraa</h2>
+                    <!-- <ul class="main-menu-social list-unstyled list-inline text-center">
+                         <li><a href="#"><span><i class="fab fa-facebook-f"></i></span></a></li>
+                         <li><a href="#"><span><i class="fab fa-pinterest"></i></span></a></li>
+                         <li><a href="#"><span><i class="fab fa-dribbble"></i></span></a></li>
+                         <li><a href="#"><span><i class="fab fa-google-plus-g"></i></span></a></li>
+                     </ul>  -->
+                </div><!-- end web-name -->
+
+                <div id="main-menu">
+                    <div class="sidenav-closebtn">
+                        <button class="btn btn-default" id="sidenav-close">&times;</button>
+                    </div><!-- end sidenav-closebtn -->
+
+                    <div class="list-group panel">
+                        <!--<a href="#homepage-links" class="list-group-item" data-toggle="collapse" data-parent="#main-menu"><span><i class="fa fa-home sidebar-icon"></i></span>Homepages<span><i class="fa fa-caret-down arrow"></i></span></a>-->
+                        <a href="index.html" class="list-group-item"><span><i class="fa fa-home sidebar-icon"></i></span>Homepages</a>
+                        <a href="index.html" class="list-group-item"><span><i class="fa fa-list-ul sidebar-icon"></i></span>Services</a>
+                        <a href="about.html" class="list-group-item"><span><i class="fa fa-info sidebar-icon"></i></span>About Us</a>
+                        <!-- <div class="collapse sub-menu" id="homepage-links">
+                             <a href="index.html" class="list-group-item">Restaurant</a>
+                             <a href="pizza.html" class="list-group-item">Pizza</a>
+                             <a href="bakery.html" class="list-group-item">Bakery</a>
+                             <a href="coffee.html" class="list-group-item">Coffee</a>
+                         </div>--><!-- end sub-menu -->
+
+                        <!--<a href="#menu-links" class="list-group-item" data-toggle="collapse" data-parent="#main-menu"><span><i class="fa fa-utensils sidebar-icon"></i></span>Menu<span><i class="fa fa-caret-down arrow"></i></span></a>
+                        <div class="collapse sub-menu" id="menu-links">
+                            <a href="menu-grid.html" class="list-group-item">Menu Grid</a>
+                            <a href="menu-list.html" class="list-group-item">Menu List</a>
+                            <a href="menu-detail.html" class="list-group-item">Menu Detail</a>
+                        </div>&lt;!&ndash; end sub-menu &ndash;&gt;
+
+                        <a href="chef.html" class="list-group-item"><span><i class="fa fa-users sidebar-icon"></i></span>Chef</a>
+                        <a href="reservation.html" class="list-group-item"><span><i class="fa fa-pencil-alt sidebar-icon"></i></span>Reservation</a>
+
+                        <a href="#gallery-links" class="list-group-item" data-toggle="collapse" data-parent="#main-menu"><span><i class="fa fa-images sidebar-icon"></i></span>Gallery<span><i class="fa fa-caret-down arrow"></i></span></a>
+                        <div class="collapse sub-menu" id="gallery-links">
+                            <a href="gallery-1-column.html" class="list-group-item">Gallery 1-Column</a>
+                            <a href="gallery-2-columns.html" class="list-group-item">Gallery 2-Columns</a>
+                        </div>&lt;!&ndash; end sub-menu &ndash;&gt;
+
+                        <a href="#user-links" class="list-group-item" data-toggle="collapse" data-parent="#main-menu"><span><i class="fa fa-user sidebar-icon"></i></span>User<span><i class="fa fa-caret-down arrow"></i></span></a>
+                        <div class="collapse sub-menu" id="user-links">
+                            <a href="user-profile.html" class="list-group-item">User Profile</a>
+                            <a href="edit-profile.html" class="list-group-item">Edit Profile</a>
+                            <a href="forget-password.html" class="list-group-item">Forget Password</a>
+                            <a href="reset-password.html" class="list-group-item">Reset Password</a>
+                        </div>&lt;!&ndash; end sub-menu &ndash;&gt;
+
+                        &lt;!&ndash;<a href="#shop-links" class="list-group-item" data-toggle="collapse" data-parent="#main-menu"><span><i class="fa fa-shopping-cart sidebar-icon"></i></span>Shop<span><i class="fa fa-caret-down arrow"></i></span></a>&ndash;&gt;
+
+                        <div class="collapse sub-menu" id="shop-links">
+                            <a href="shopping-cart.html" class="list-group-item">Shopping Cart</a>
+                            <a href="checkout.html" class="list-group-item">Checkout</a>
+                            <a href="order-history.html" class="list-group-item">Order History</a>
+                        </div>&lt;!&ndash; end sub-menu &ndash;&gt;
+
+                        <a href="#pages-links" class="list-group-item" data-toggle="collapse" data-parent="#main-menu"><span><i class="fa fa-clone sidebar-icon"></i></span>Pages<span><i class="fa fa-caret-down arrow"></i></span></a>
+                        <div class="collapse sub-menu" id="pages-links">
+                            <a href="about.html" class="list-group-item">About Us</a>
+                            <a href="testimonials.html" class="list-group-item">Testimonials</a>
+                            <a href="error-page.html" class="list-group-item">Error 404</a>
+                            <a href="blog.html" class="list-group-item">Blog List</a>
+                            <a href="blog-detail.html" class="list-group-item">Blog Detail</a>
+                        </div>&lt;!&ndash; end sub-menu &ndash;&gt;
+
+                        <a href="#navigation-links" class="list-group-item" data-toggle="collapse" data-parent="#main-menu"><span><i class="fa fa-list-ul sidebar-icon"></i></span>Navigations<span><i class="fa fa-caret-down arrow"></i></span></a>
+                        <div class="collapse sub-menu" id="navigation-links">
+                            <a href="#" class="list-group-item">Sidebar Navigation</a>
+                            <a href="javascript:void(0)" id="fullscr-open" class="list-group-item">FullScreen Navigation</a>
+                        </div>--><!-- end sub-menu -->
+
+                        <a href="contact.html" class="list-group-item"><span><i class="fa fa-phone sidebar-icon"></i></span>Contact Us</a>
+                        <a href="map.html" class="list-group-item"><span><i class="fa fa-map-marker sidebar-icon"></i></span>Location</a>
+                        <a href="#" class="list-group-item active"><span><i class="fa fa-lock sidebar-icon"></i></span>Login</a>
+                        <a href="register.html" class="list-group-item"><span><i class="fa fa-user-plus sidebar-icon"></i></span>Register</a>
+                    </div><!-- end list-group -->
+                </div><!-- end main-menu -->
+            </div><!-- end mySidenav -->
+        </div>
+
+        <!-- end sidenav-content -->
+
+
+        <!--=============== FULLSCR-NAV ==============-->
+        <div w3-include-html="include/fullscr_nav.html" id="fullscr-nav" class="fullscr-navigation"></div>
+        <!-- end fullscr-nav -->
+
+
+        <!--================ SHOPPING-CART ==============-->
+        <div w3-include-html="include/shopping_cart.html" id="shopping-cart-sidebar" class="shc-sidebar"></div>
+        <!-- shopping-cart-sidebar -->
+
+
+        <!--============== USER-PROFILE-SIDEBAR =============-->
+        <div w3-include-html="include/user_profile_sidebar.html" id="user-profile-sidebar" class="user-prf-sidebar"></div>
+        <!-- end user-profile-sidebar -->
+        
+        
+        <div class="canvas">
+            
+            <div class="overlay-black"></div>
+            
+            <!--========= HEADER =========-->
+            <div w3-include-html="include/header.html" class="header"></div>
+            <!-- end header -->
+            
+            
+            <!--========= PAGE-COVER =========-->
+            <div class="page-cover">
+                <div class="container-fluid">
+                    <h3><span class="cover-left-icon pull-left"><i class="fa fa-question"></i></span>Forgot Password<span class="cover-right-icon pull-right"><i class="fa fa-question"></i></span></h3>
+                </div><!-- end container-fluid -->
+            </div><!-- end page-cover -->
+            
+         
+            <!--=================== PAGE-WRAPPER ================-->
+            <section class="page-wrapper innerpage-section-padding">
+                <div id="forgot-password-page" >
+                    <div class="container-fluid text-center">
+                        <div class="innerpage-heading">
+                            <h3 trans-lang-html="confirm_phone"></h3>
+                            <p trans-lang-html="confirm_phone_paragraph"></p>
+                        </div><!-- end innerpage-heading -->
+                        
+                        <form class="custom-form" id="confirm-code-form">
+                            <div id="response"></div>
+                            <div class="form-group">
+                                 <div class="input-group">
+                                    <input type="text" name="confirm_code" id="confirm_code" class="form-control" trans-lang-placeholder="your_code"  required/>
+                                    <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+                                 </div>
+                            </div>
+                            <button class="btn btn-orange btn-radius" trans-lang-html="confirm"></button>
+                        </form>
+                        
+                        <div class="form-page-links">
+                            <p ><a href="resend_confirm_code.html" trans-lang-html="resend_confirm_code"></a></p>
+                        </div><!-- end form-page-links -->
+                        
+                    </div><!-- end container-fluid -->
+                </div><!-- end forgot-password-page -->
+            </section><!-- end page-wrapper -->
+            
+            
+            <!--=============== FOOTER ===============-->
+            <!--<section id="footer" class="section-padding">
+                <div class="container-fluid text-center">
+                    <h3><span><i class="far fa-star"></i>Res</span>taurant</h3>
+                    <ul class="footer-contact list-unstyled">
+                        <li><span><i class="fa fa-map-marker-alt"></i></span>Street # 3, Lorem ipsum dolor , California. </li>
+                        <li><span><i class="fa fa-envelope"></i></span>info@starrestaurant.com</li>
+                        <li><span><i class="fa fa-phone"></i></span>+123 1234 123456</li>
+                    </ul>
+      
+                    <ul class="footer-social list-unstyled list-inline">
+                        <li><a href="#"><span><i class="fab fa-facebook-f"></i></span></a></li>
+                        <li><a href="#"><span><i class="fab fa-instagram"></i></span></a></li>
+                        <li><a href="#"><span><i class="fab fa-pinterest"></i></span></a></li>
+                        <li><a href="#"><span><i class="fab fa-twitter"></i></span></a></li>
+                        <li><a href="#"><span><i class="fab fa-dribbble"></i></span></a></li>
+                    </ul>
+                    <p class="copyright">© 2018 <a href="#"><span><i class="far fa-star"></i></span>Restaurant</a>. All rights reserved.</p>
+                </div>&lt;!&ndash; end container-fluid &ndash;&gt;
+            </section>--><!-- end footer -->
+            
+        </div><!-- end canvas -->
+        
+        
+   		<!-- Page Scripts Starts -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/custom-navigation.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQEddaDk0teVRCde15IqYQrrl0vMilKXo"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/pulltorefresh.js"></script>
+        <script src="js/index.js"></script>
+        <script>
+            PullToRefresh.init({
+                mainElement: '.page-wrapper', // above which element?
+                onRefresh: function (cb) {
+                    setTimeout(function () {
+                        cb();
+                        $("#confirm-code-form")[0].reset();
+                    }, 1500);
+                }
+            });
+            /*window.document.addEventListener("scroll", function(){
+                if(window.pageYOffset == 0){
+                    $("#confirm-code-form")[0].reset();
+                    window.scrollBy(0, 60);
+                }
+            },false)*/
+        </script>
+        <!-- Page Scripts Ends -->
+    
+    </body>
+</html>
